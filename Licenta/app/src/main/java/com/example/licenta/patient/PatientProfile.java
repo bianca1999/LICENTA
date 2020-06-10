@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.patient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.licenta.R;
 
 public class PatientProfile extends AppCompatActivity {
     ImageView userImage;

@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#2DCEE3</color>
     <color name="toolBarColor">#63C1EC</color>
+    <color name="chatColor">#E5EAEC</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.patient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,21 +9,39 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.licenta.MainActivity;
+import com.example.licenta.R;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class StartActivity extends AppCompatActivity {
+public class StartPatientActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
+    private ViewPager viewPager;
+    private SectionsPagerAdapter sectionsPagerAdapter;
+    private TabLayout tabLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_start_patient);
+
         toolbar=findViewById(R.id.main_app_bar);
-        mAuth = FirebaseAuth.getInstance();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Patient App");
+
+        mAuth = FirebaseAuth.getInstance();
+        viewPager=findViewById(R.id.viewPager);
+
+        sectionsPagerAdapter=new SectionsPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(sectionsPagerAdapter);
+        tabLayout=findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     @Override
@@ -54,7 +72,7 @@ public class StartActivity extends AppCompatActivity {
         }
     }
     private void sendToWelcomePage() {
-        Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        Intent intent=new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
     }

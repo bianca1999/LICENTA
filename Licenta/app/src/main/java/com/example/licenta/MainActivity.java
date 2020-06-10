@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.licenta.medic.LoginMedicActivity;
+import com.example.licenta.patient.LoginPatientActivity;
+
 public class MainActivity extends AppCompatActivity {
     public Button medicButton, pacientButton;
     @Override
@@ -17,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         pacientButton = findViewById(R.id.pacientButton);
     }
         public void medicLogin(View view){
-            Intent intent=new Intent(getApplicationContext(),LoginMedicActivity.class);
+            Intent intent=new Intent(getApplicationContext(), LoginMedicActivity.class);
             startActivity(intent);
         }
 

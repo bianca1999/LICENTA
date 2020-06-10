@@ -20,4 +20,28 @@
     <string name="choose_the_category">Choose your category!</string>
     <string name="logout">Logout</string>
     <string name="profile_settings">Profile Settings</string>
+    <string name="doctor_register">Doctor Register</string>
+
+    <string-array name="Specializari">
+        <item>Cardiologie</item>
+        <item>Chirurgie</item>
+        <item>Dermatologie</item>
+        <item>Endocrionologie</item>
+        <item>Gastroenterologie</item>
+        <item>Nefrologie</item>
+        <item>Neonatologie</item>
+        <item>Neurochirurgie</item>
+        <item>Neurologie</item>
+        <item>Obstretica-Ginecologie</item>
+        <item>Oftalmologie</item>
+        <item>Oncologie</item>
+        <item>Ortopedie</item>
+        <item>Pediatrie</item>
+        <item>Reumatologie</item>
+        <item>Urologie</item>
+        <item>Pneumologie</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
