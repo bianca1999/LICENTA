@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Licenta</string>
+    <string name="email">E-mail</string>
+    <string name="loginPatientTitle">Patient Login</string>
+    <string name="address">Address</string>
+    <string name="birthday">Birthday</string>
+    <string name="firstName">First Name</string>
+    <string name="lastName">Last Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="registerPatientTitle">Patient Register</string>
+    <string name="registerMedicTitle">Doctor Register</string>
+    <string name="loginMedicTitle">Doctor Login</string>
+    <string name="loginButton">Login</string>
+    <string name="password">Password</string>
+    <string name="register1">Don`t have an account?</string>
+    <string name="register2">Register</string>
+    <string name="medicButton">Doctor</string>
+    <string name="patientButton">Patient</string>
+    <string name="welcome_to_medchat">Welcome to MedChat!</string>
+    <string name="choose_the_category">Choose your category!</string>
+    <string name="logout">Logout</string>
+    <string name="profile_settings">Profile Settings</string>
+</resources>
