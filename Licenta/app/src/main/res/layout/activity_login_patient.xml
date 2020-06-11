@@ -7,54 +7,59 @@
     tools:context=".patient.LoginPatientActivity">
     <include layout="@layout/bar_layout"
         android:id="@+id/main_app_bar"/>
+
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="261dp"
         android:layout_height="41dp"
+        android:drawableLeft="@android:drawable/sym_action_email"
         android:ems="10"
-        android:hint="E-mail"
+        android:hint=" Adresa de email"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pacientLogin"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintVertical_bias="0.099" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="258dp"
         android:layout_height="43dp"
+        android:drawableLeft="@android:drawable/ic_secure"
         android:ems="10"
-        android:hint="@string/password"
+        android:hint="  Parola"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailEditText"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintVertical_bias="0.027" />
 
     <TextView
         android:id="@+id/pacientLogin"
-        android:layout_width="292dp"
-        android:layout_height="84dp"
+        android:layout_width="263dp"
+        android:layout_height="59dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="@string/loginPatientTitle"
-        android:textSize="24sp"
+        android:text="Logare Pacient"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168" />
+        app:layout_constraintVertical_bias="0.113" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="167dp"
         android:layout_height="41dp"
         android:text="@string/loginButton"
+        android:textColor="@color/chatColor"
+        android:background="@color/toolBarColor"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +70,7 @@
         android:id="@+id/registerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register1"
+        android:text="Nu aveti inca un cont?"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,8 +84,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="patientRegister"
-        android:text="@string/register2"
+        android:text="Inregistrati-va!"
         android:textSize="16sp"
+        android:textColor="@color/toolBarColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -8,65 +8,75 @@
     >
  <include layout="@layout/bar_layout"
      android:id="@+id/main_app_bar"/>
- <EditText
-     android:id="@+id/emailEditText"
-     android:layout_width="261dp"
-     android:layout_height="41dp"
-     android:ems="10"
-     android:hint="E-mail"
-     android:inputType="textPersonName"
-     app:layout_constraintBottom_toBottomOf="parent"
-     app:layout_constraintEnd_toEndOf="parent"
-     app:layout_constraintHorizontal_bias="0.506"
-     app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintTop_toBottomOf="@+id/medicLogin"
-     app:layout_constraintVertical_bias="0.117" />
+
 
  <EditText
-     android:id="@+id/passwordEditText"
+     android:id="@+id/emailEditText"
+     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
      android:layout_width="258dp"
-     android:layout_height="43dp"
-     android:ems="10"
-     android:hint="@string/password"
-     android:inputType="textPassword"
+     android:layout_height="46dp"
+     android:drawableLeft="@android:drawable/sym_action_email"
+     android:hint="  Adresa de e-mail"
+     android:inputType="textPersonName"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintEnd_toEndOf="parent"
      app:layout_constraintHorizontal_bias="0.496"
      app:layout_constraintStart_toStartOf="parent"
-     app:layout_constraintTop_toBottomOf="@+id/emailEditText"
-     app:layout_constraintVertical_bias="0.071" />
+
+     app:layout_constraintTop_toBottomOf="@+id/medicLogin"
+     app:layout_constraintVertical_bias="0.164" />
 
  <TextView
      android:id="@+id/medicLogin"
-     android:layout_width="292dp"
-     android:layout_height="84dp"
+     android:layout_width="241dp"
+     android:layout_height="52dp"
      android:gravity="center_horizontal|center_vertical"
-     android:text="@string/loginMedicTitle"
-     android:textSize="24sp"
+     android:text="Logare Medic"
+     android:textSize="30sp"
      android:textStyle="bold"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintEnd_toEndOf="parent"
-     app:layout_constraintHorizontal_bias="0.51"
      app:layout_constraintStart_toStartOf="parent"
      app:layout_constraintTop_toTopOf="parent"
-     app:layout_constraintVertical_bias="0.067" />
+     app:layout_constraintVertical_bias="0.12" />
+
+ <EditText
+     android:id="@+id/passwordEditText"
+     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+     android:layout_width="257dp"
+     android:layout_height="51dp"
+     android:drawableLeft="@android:drawable/ic_secure"
+     android:ems="10"
+     android:hint="  Parola"
+     android:inputType="textPassword"
+     app:layout_constraintBottom_toBottomOf="parent"
+     app:layout_constraintEnd_toEndOf="parent"
+     app:layout_constraintHorizontal_bias="0.519"
+     app:layout_constraintStart_toStartOf="parent"
+     app:layout_constraintTop_toBottomOf="@+id/emailEditText"
+
+     app:layout_constraintVertical_bias="0.045" />
 
  <Button
      android:id="@+id/button"
      android:layout_width="167dp"
      android:layout_height="41dp"
-     android:text="@string/loginButton"
+     android:background="@color/toolBarColor"
+     android:text="Login"
+     android:textColor="@color/chatColor"
+     android:textSize="18dp"
+     android:textStyle="bold"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintEnd_toEndOf="parent"
      app:layout_constraintStart_toStartOf="parent"
      app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-     app:layout_constraintVertical_bias="0.141" />
+     app:layout_constraintVertical_bias="0.154" />
 
  <TextView
      android:id="@+id/registerTextView"
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
-     android:text="@string/register1"
+     android:text="Nu aveti inca un cont?"
      android:textSize="18sp"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintEnd_toEndOf="parent"
@@ -80,12 +90,13 @@
      android:layout_width="wrap_content"
      android:layout_height="wrap_content"
      android:onClick="medicRegister"
-     android:text="@string/register2"
+     android:text="Inregistrati-va!"
      android:textSize="16sp"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintEnd_toEndOf="parent"
      app:layout_constraintStart_toStartOf="parent"
      app:layout_constraintTop_toBottomOf="@+id/registerTextView"
-     app:layout_constraintVertical_bias="0.063" />
+     app:layout_constraintVertical_bias="0.063"
+     android:textColor="@color/toolBarColor"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

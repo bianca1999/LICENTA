@@ -17,16 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.licenta.R;
+import com.example.licenta.patient.PatientModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterMedicActivity extends AppCompatActivity {
     private TextView titleTextView, specializareTextView;
     private FirebaseAuth mAuth;
-    private FirebaseAnalytics mFirebaseAnalytics;
+    private DatabaseReference referencefirebaseDatabase;
     private EditText lastName, firstName, email, phone, address, password;
     private Spinner specializariSpinner;
     private Button medicRegisterButton;
@@ -44,7 +48,9 @@ public class RegisterMedicActivity extends AppCompatActivity {
         address=findViewById(R.id.adressEditText);
         password=findViewById((R.id.password));
         medicRegisterButton=findViewById(R.id.registerButton);
+        mAuth=FirebaseAuth.getInstance();
 
+        progressDialog=new ProgressDialog(this);
         specializariSpinner=findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.Specializari, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -83,7 +89,6 @@ public class RegisterMedicActivity extends AppCompatActivity {
                     progressDialog.setMessage("Please wait a second...");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
-
                     registerMedic(lastNameText, firstNameText, emailText, phoneText, addressText, specializareText, passwordText);
                 }
                 else{
@@ -103,12 +108,15 @@ public class RegisterMedicActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
-                            mFirebaseAnalytics.setUserProperty("address",addressText);
-                            mFirebaseAnalytics.setUserProperty("specializare",specializareText);
-                            mFirebaseAnalytics.setUserProperty("phone",phoneText);
-                            mFirebaseAnalytics.setUserProperty("firstName",firstNameText);
-                            mFirebaseAnalytics.setUserProperty("lastName",lastNameText);
-                            sendToLoginPage();
+                            FirebaseUser current_user=FirebaseAuth.getInstance().getCurrentUser();
+                            if(current_user != null) {
+                                String uid = current_user.getUid();
+                                referencefirebaseDatabase = FirebaseDatabase.getInstance().getReference();
+                                MedicModel medicModel = new MedicModel(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText);
+                                referencefirebaseDatabase.child("Doctors").child(uid).setValue(medicModel);
+                                progressDialog.dismiss();
+                                sendToLoginPage();
+                            }
 
                         } else {
                             progressDialog.hide();

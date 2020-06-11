@@ -27,7 +27,6 @@ public class LoginMedicActivity extends AppCompatActivity {
     private TextView titleTextView, register1, register2;
     private Button loginButton;
     private EditText emailEditText, passwordEditText;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
 
@@ -39,9 +38,11 @@ public class LoginMedicActivity extends AppCompatActivity {
         titleTextView = findViewById(R.id.medicLogin);
         register1 = findViewById(R.id.registerTextView);
         register2 = findViewById(R.id.registerTextView2);
-        loginButton = findViewById(R.id.loginButton);
+        loginButton = findViewById(R.id.button);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
+        progressDialog=new ProgressDialog(this);
+
 
         mAuth = FirebaseAuth.getInstance();
         loginButton.setOnClickListener(new View.OnClickListener() {

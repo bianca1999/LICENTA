@@ -3,14 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patient.PatientChatsFragment">
+    tools:context=".medic.MedicChatsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Hello to chats fragment"
-        />
+        android:layout_height="match_parent"
+        android:text="Hello to medic Chats" />
 
 </FrameLayout>

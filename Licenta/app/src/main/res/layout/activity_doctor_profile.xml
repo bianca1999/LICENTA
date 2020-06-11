@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patient.PatientProfile">
+    tools:context=".patient.DoctorProfile">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -27,7 +27,7 @@
 
         </RelativeLayout>
         <TextView
-            android:id="@+id/userName"
+            android:id="@+id/doctorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bianca"
@@ -48,7 +48,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="40dp"
             android:layout_marginRight="30dp"
@@ -62,16 +61,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="E-mail"
+                    android:text="Email"
+                    android:textSize="15sp"
                     android:textColor="@color/toolBarColor"
-                    android:textSize="15sp" />
+                    />
 
                 <TextView
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text=" joey@sharenofood.com"
+                    android:text="joey@sharenofood.com"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:drawableLeft="@android:drawable/sym_action_email"
@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Telefon"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:textColor="@color/toolBarColor"/>
 
                 <TextView
@@ -124,8 +124,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adresa"
-                    android:textSize="15sp"
+                    android:text="Address"
+                    android:textSize="13sp"
                     android:textColor="@color/toolBarColor"/>
 
                 <TextView
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text=" Adresa"
+                    android:text="Adresa"
                     android:textColor="#000000"
                     android:textSize="18sp"
                     android:drawableLeft="@android:drawable/ic_menu_mapmode"
@@ -146,8 +146,6 @@
 
             </LinearLayout>
 
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -157,19 +155,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Birthday"
-                    android:textSize="15sp"
-                    android:textColor="@color/toolBarColor"/>
+                    android:text="Specializare"
+                    android:textColor="@color/toolBarColor"
+                    android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/birthday"
+                    android:id="@+id/specializare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="July 15, 1999"
+                    android:text="Cardiologie"
                     android:textColor="#000000"
                     android:textSize="18sp"
-                    android:drawableLeft="@android:drawable/ic_menu_my_calendar"
                     />
 
                 <View
@@ -178,41 +175,13 @@
                     android:layout_marginTop="15dp" />
 
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sex"
-                    android:textSize="15sp"
-                    android:textColor="@color/toolBarColor"/>
-
-                <TextView
-                    android:id="@+id/gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Male"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-
-                    />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp" />
-
-            </LinearLayout>
 
 
         </LinearLayout>
 
 
     </RelativeLayout>
+
 
 </RelativeLayout>

@@ -21,7 +21,7 @@ public class StartPatientActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
     private ViewPager viewPager;
-    private SectionsPagerAdapter sectionsPagerAdapter;
+    private PatientPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
 
     @Override
@@ -36,7 +36,7 @@ public class StartPatientActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         viewPager=findViewById(R.id.viewPager);
 
-        sectionsPagerAdapter=new SectionsPagerAdapter(getSupportFragmentManager());
+        sectionsPagerAdapter=new PatientPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(sectionsPagerAdapter);
         tabLayout=findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
@@ -54,11 +54,24 @@ public class StartPatientActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        if(item.getItemId()==R.id.patientLogout){
-            FirebaseAuth.getInstance().signOut();
-            sendToWelcomePage();
+        Intent intent;
+        switch (item.getItemId()){
+            case R.id.patientLogout:
+                FirebaseAuth.getInstance().signOut();
+                sendToWelcomePage();
+            case R.id.patientSettings:
+                intent = new Intent(this,PatientProfile.class);
+                this.startActivity(intent);
+            case R.id.allDoctors:
+                intent = new Intent(this,AllDoctors.class);
+                this.startActivity(intent);
+
+            default:
+                return true;
+
+
         }
-        return true;
+
     }
 
     @Override

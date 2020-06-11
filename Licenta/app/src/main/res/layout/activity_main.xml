@@ -9,35 +9,41 @@
 
     <Button
         android:id="@+id/medicButton"
-        android:layout_width="156dp"
-        android:layout_height="50dp"
+        android:layout_width="168dp"
+        android:layout_height="46dp"
+        android:background="@color/toolBarColor"
         android:onClick="medicLogin"
-        android:text="@string/medicButton"
+        android:text="Medic"
+        android:textColor="@color/chatColor"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.482"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
+        app:layout_constraintVertical_bias="0.71" />
 
     <Button
         android:id="@+id/pacientButton"
-        android:layout_width="153dp"
-        android:layout_height="51dp"
+        android:layout_width="170dp"
+        android:layout_height="47dp"
+        android:background="@color/toolBarColor"
         android:onClick="pacientLogin"
-        android:text="@string/patientButton"
+        android:text="Pacient"
+        android:textColor="@color/chatColor"
+        android:textSize="18dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/medicButton"
-        app:layout_constraintVertical_bias="0.22" />
+        app:layout_constraintVertical_bias="0.219" />
 
     <TextView
         android:id="@+id/welcomeMsg"
         android:layout_width="319dp"
         android:layout_height="62dp"
-        android:text="@string/welcome_to_medchat"
+        android:text="Welcome to MedChat!"
         android:textSize="32sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -50,13 +56,24 @@
         android:id="@+id/chooseMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_the_category"
+        android:text="Alege categoria din care faci parte!"
         android:textSize="20sp"
-        android:textStyle="normal|bold|italic"
+        android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeMsg"
-        app:layout_constraintVertical_bias="0.38" />
+        app:layout_constraintVertical_bias="0.492" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeMsg"
+        app:layout_constraintVertical_bias="0.035"
+        app:srcCompat="@drawable/imgMedic" />
 </androidx.constraintlayout.widget.ConstraintLayout>

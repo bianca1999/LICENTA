@@ -3,42 +3,32 @@ package com.example.licenta.patient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class PatientProfile extends AppCompatActivity {
-
+public class DoctorProfile extends AppCompatActivity {
+    private TextView displayId, doctorEmail, doctorPhone, doctorName, specializare, doctorAddress;
     private DatabaseReference databaseReference;
-    private FirebaseUser currentUser;
-    ImageView userImage;
-    TextView userEmail, userAddress, userGender, userPhone, userBirthday, userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_profile);
-        userImage=findViewById(R.id.userImage);
-        userEmail=findViewById(R.id.email);
-        userAddress=findViewById(R.id.address);
-        userGender=findViewById(R.id.gender);
-        userPhone=findViewById(R.id.phone);
-        userBirthday=findViewById(R.id.birthday);
-        userName=findViewById(R.id.userName);
+        setContentView(R.layout.activity_doctor_profile);
 
+        String doctor_id=getIntent().getStringExtra("doctor_id");
+        doctorName=findViewById(R.id.doctorName);
+        doctorPhone=findViewById(R.id.phone);
+        doctorEmail=findViewById(R.id.email);
+        doctorAddress=findViewById(R.id.address);
+        specializare=findViewById(R.id.specializare);
 
-        currentUser=FirebaseAuth.getInstance().getCurrentUser();
-        String current_user_uid=currentUser.getUid();
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(current_user_uid);
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -47,13 +37,13 @@ public class PatientProfile extends AppCompatActivity {
                 String address=dataSnapshot.child("address").getValue().toString();
                 String email=dataSnapshot.child("email").getValue().toString();
                 String phone=dataSnapshot.child("phone").getValue().toString();
-                String gender=dataSnapshot.child("gender").getValue().toString();
+                String specializareD=dataSnapshot.child("specializare").getValue().toString();
 
-                userName.setText(firstName+" "+lastName);
-                userAddress.setText(address);
-                userEmail.setText(email);
-                userPhone.setText(phone);
-                userGender.setText(gender);
+                doctorName.setText("dr. "+firstName+ " " +lastName);
+                doctorPhone.setText(phone);
+                doctorEmail.setText(email);
+                doctorAddress.setText(address);
+                specializare.setText(specializareD);
 
             }
 
@@ -62,6 +52,5 @@ public class PatientProfile extends AppCompatActivity {
 
             }
         });
-
     }
 }

@@ -47,7 +47,6 @@ public class LoginPatientActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Patient LOGIN");
 
         progressDialog=new ProgressDialog(this);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
