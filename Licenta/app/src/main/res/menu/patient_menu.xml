@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/patientSettings"
-        android:title="@string/profile_settings" />
+        android:title="@string/profile_settings"
+        android:icon="@drawable/ic_launcher_background"/>
     <item
         android:id="@+id/allDoctors"
         android:title="All Doctors" />

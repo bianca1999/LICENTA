@@ -1,4 +1,4 @@
-package com.example.licenta.medic;
+package com.example.licenta.register;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.licenta.R;
-import com.example.licenta.patient.PatientModel;
+import com.example.licenta.login.LoginMedicActivity;
+import com.example.licenta.MedicModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

@@ -1,4 +1,4 @@
-package com.example.licenta.patient;
+package com.example.licenta.login;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.licenta.R;
+import com.example.licenta.register.RegisterPatientActivity;
+import com.example.licenta.StartPatientActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -44,7 +46,7 @@ public class LoginPatientActivity extends AppCompatActivity {
         passwordEditText=findViewById(R.id.passwordEditText);
         toolbar=findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Patient LOGIN");
+        //getSupportActionBar().setTitle("Patient LOGIN");
 
         progressDialog=new ProgressDialog(this);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -53,8 +55,8 @@ public class LoginPatientActivity extends AppCompatActivity {
                 String emailText=emailEditText.getText().toString();
                 String passwordText=passwordEditText.getText().toString();
                 if(!TextUtils.isEmpty(emailText) || !TextUtils.isEmpty(passwordText)){
-                    progressDialog.setTitle("Loging In");
-                    progressDialog.setMessage("Please wait to login...!");
+                    progressDialog.setTitle("Logare Pacient");
+                    progressDialog.setMessage("Va rugam sa asteptati cateva momente...!");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     loginPatient(emailText, passwordText);

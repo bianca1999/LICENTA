@@ -1,4 +1,4 @@
-package com.example.licenta.medic;
+package com.example.licenta.fragments;
 
 import android.os.Bundle;
 
@@ -13,17 +13,11 @@ import com.example.licenta.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PatientsFragment extends Fragment {
-
-    public PatientsFragment() {
-        // Required empty public constructor
-    }
-
+public class PatientChatsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_patients, container, false);
+        return inflater.inflate(R.layout.fragment_chats, container, false);
     }
 }

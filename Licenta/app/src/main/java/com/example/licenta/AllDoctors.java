@@ -1,4 +1,4 @@
-package com.example.licenta.patient;
+package com.example.licenta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +11,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.licenta.R;
-import com.example.licenta.medic.MedicModel;
+import com.example.licenta.model.Doctor;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
@@ -51,27 +49,27 @@ public class AllDoctors extends AppCompatActivity {
                 .getReference()
                 .child("Doctors");
 
-        FirebaseRecyclerOptions<Doctors> options =
-                new FirebaseRecyclerOptions.Builder<Doctors>()
-                        .setQuery(query, Doctors.class)
+        FirebaseRecyclerOptions<Doctor> options =
+                new FirebaseRecyclerOptions.Builder<Doctor>()
+                        .setQuery(query, Doctor.class)
                         .build();
-        FirebaseRecyclerAdapter<Doctors,DoctorsViewHolder> firebaseRecyclerAdapter=new FirebaseRecyclerAdapter<Doctors,DoctorsViewHolder>(options) {
+        FirebaseRecyclerAdapter<Doctor,DoctorsViewHolder> firebaseRecyclerAdapter=
+                new FirebaseRecyclerAdapter<Doctor,DoctorsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(DoctorsViewHolder holder, int position, Doctors doctors) {
+            protected void onBindViewHolder(DoctorsViewHolder holder, int position, Doctor doctors) {
                 holder.setName(doctors.getFirstName(),doctors.getLastName());
                 holder.setSpecializare(doctors.getSpecializare());
                 final String doctor_id=getRef(position).getKey();
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(AllDoctors.this,DoctorProfile.class);
+                        Intent intent = new Intent(AllDoctors.this, DoctorProfile.class);
                         intent.putExtra("doctor_id",doctor_id);
 
                         startActivity(intent);
                     }
                 });
             }
-
             @NonNull
             @Override
             public DoctorsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

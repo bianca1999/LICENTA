@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/chatColor"
+    tools:context=".WindowChatActivity">
+
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/tabBarColor"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="-7dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/userImage"
+            android:layout_width="82dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            app:srcCompat="@drawable/user_img" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/userImage"
+            android:layout_toRightOf="@+id/userImage">
+            <TextView
+                android:id="@+id/displayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingLeft="8dp"
+
+                android:text="DisplayName"
+                android:textColor="@color/chatColor"
+                android:textSize="22dp" />
+
+            <TextView
+                android:id="@+id/specializare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/displayName"
+                android:paddingLeft="20dp"
+                android:layout_weight="1"
+                android:text="Cardiologie" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            >
+
+            <ImageView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="90dp"
+                android:paddingRight="10dp"
+                app:srcCompat="@android:drawable/presence_video_online" />
+        </RelativeLayout>
+    </LinearLayout>
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/topbar"
+        android:layout_width="wrap_content"
+        android:layout_height="580dp"
+        android:layout_weight="1" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/messageRecView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/topbar"/>
+
+
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/addFile"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <EditText
+            android:id="@+id/mesaj"
+            android:layout_width="360dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="start|top"
+            android:background="@color/white"
+            android:hint="Scrie o intrebare..."
+            android:inputType="textMultiLine" />
+
+        <ImageButton
+            android:id="@+id/sendBtn"
+            android:layout_width="83dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            app:srcCompat="@android:drawable/ic_menu_send" />
+
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

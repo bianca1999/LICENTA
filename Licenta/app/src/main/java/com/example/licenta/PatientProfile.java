@@ -1,4 +1,4 @@
-package com.example.licenta.patient;
+package com.example.licenta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,17 +1,17 @@
-package com.example.licenta.patient;
+package com.example.licenta.model;
 
-public class Doctors {
+public class Doctor {
     private String firstName;
     private String lastName;
     private String specializare;
 
-    public Doctors(String firstName, String lastName, String specializare) {
+    public Doctor(String firstName, String lastName, String specializare) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.specializare = specializare;
     }
 
-    public Doctors(){
+    public Doctor(){
 
     }
 

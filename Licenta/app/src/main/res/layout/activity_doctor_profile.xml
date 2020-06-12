@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".patient.DoctorProfile">
+    tools:context=".DoctorProfile">
 
     <RelativeLayout
         android:id="@+id/header"
@@ -176,6 +176,25 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingLeft="43dp">
+
+                <Button
+                    android:id="@+id/intrebare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/toolBarColor"
+                    android:drawableLeft="@android:drawable/sym_action_chat"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Scrie o intrebare"
+                    android:textColor="@color/chatColor"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
 
         </LinearLayout>

@@ -1,12 +1,13 @@
-package com.example.licenta.medic;
+package com.example.licenta;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.licenta.patient.PatientChatsFragment;
-import com.example.licenta.patient.DoctorsFragment;
+import com.example.licenta.fragments.MedicChatsFragment;
+import com.example.licenta.fragments.MedicRequestsFragment;
+import com.example.licenta.fragments.PatientsFragment;
 
 public class MedicPagerAdapter extends FragmentPagerAdapter {
     private Fragment[] childFragments;

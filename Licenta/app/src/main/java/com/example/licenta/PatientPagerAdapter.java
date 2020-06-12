@@ -1,8 +1,11 @@
-package com.example.licenta.patient;
+package com.example.licenta;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.example.licenta.fragments.DoctorsFragment;
+import com.example.licenta.fragments.PatientChatsFragment;
 
 
 class PatientPagerAdapter extends FragmentPagerAdapter {
@@ -29,8 +32,8 @@ class PatientPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if(position==0)
-            return "Conversations";
+            return "Conversatii";
         else
-            return "Doctors";
+            return "Medici";
     }
 }

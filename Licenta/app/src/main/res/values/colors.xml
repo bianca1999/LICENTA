@@ -4,5 +4,10 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#2DCEE3</color>
     <color name="toolBarColor">#63C1EC</color>
+    <color name="tabBarColor">#3694BF</color>
+
     <color name="chatColor">#E5EAEC</color>
+    <color name="white">#FEFFFF</color>
+    <color name="chatWindow">#A3AAAE</color>
+
 </resources>

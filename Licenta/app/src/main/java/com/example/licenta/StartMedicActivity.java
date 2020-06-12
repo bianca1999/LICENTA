@@ -1,43 +1,40 @@
-package com.example.licenta.patient;
+package com.example.licenta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
-
-import com.example.licenta.MainActivity;
-import com.example.licenta.R;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class StartPatientActivity extends AppCompatActivity {
+public class StartMedicActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FirebaseAuth mAuth;
     private ViewPager viewPager;
-    private PatientPagerAdapter sectionsPagerAdapter;
+    private MedicPagerAdapter medicPagerAdapter;
     private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_patient);
+        setContentView(R.layout.activity_start_medic);
 
         toolbar=findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Patient App");
+        getSupportActionBar().setTitle("Medic App");
 
         mAuth = FirebaseAuth.getInstance();
         viewPager=findViewById(R.id.viewPager);
 
-        sectionsPagerAdapter=new PatientPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(sectionsPagerAdapter);
+        medicPagerAdapter=new MedicPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(medicPagerAdapter);
         tabLayout=findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -54,33 +51,19 @@ public class StartPatientActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        Intent intent;
-        switch (item.getItemId()){
-            case R.id.patientLogout:
-                FirebaseAuth.getInstance().signOut();
-                sendToWelcomePage();
-            case R.id.patientSettings:
-                intent = new Intent(this,PatientProfile.class);
-                this.startActivity(intent);
-            case R.id.allDoctors:
-                intent = new Intent(this,AllDoctors.class);
-                this.startActivity(intent);
-
-            default:
-                return true;
-
-
+        if(item.getItemId()==R.id.patientLogout){
+            FirebaseAuth.getInstance().signOut();
+            sendToWelcomePage();
         }
-
+        return true;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-         if(currentUser== null){
-             sendToWelcomePage();
+        if(currentUser== null){
+            sendToWelcomePage();
 
         }
     }
@@ -91,4 +74,3 @@ public class StartPatientActivity extends AppCompatActivity {
     }
 
 }
-

@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".patient.DoctorProfile"></activity>
+        <activity android:name=".WindowChatActivity" />
+        <activity android:name=".DoctorProfile" />
         <activity
-            android:name=".patient.AllDoctors"
-            android:parentActivityName=".patient.StartPatientActivity" />
-        <activity android:name=".medic.StartMedicActivity" />
-        <activity android:name=".patient.StartPatientActivity" />
-        <activity android:name=".patient.PatientProfile" />
-        <activity android:name=".medic.RegisterMedicActivity" />
-        <activity android:name=".patient.RegisterPatientActivity" />
-        <activity android:name=".patient.LoginPatientActivity" />
-        <activity android:name=".medic.LoginMedicActivity" />
+            android:name=".AllDoctors"
+            android:parentActivityName=".StartPatientActivity" />
+        <activity android:name=".StartMedicActivity" />
+        <activity android:name=".StartPatientActivity" />
+        <activity android:name=".PatientProfile" />
+        <activity android:name=".register.RegisterMedicActivity" />
+        <activity android:name=".register.RegisterPatientActivity" />
+        <activity android:name=".login.LoginPatientActivity" />
+        <activity android:name=".login.LoginMedicActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

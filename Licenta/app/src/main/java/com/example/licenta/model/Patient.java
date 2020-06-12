@@ -1,23 +1,22 @@
-package com.example.licenta.medic;
+package com.example.licenta.model;
 
-public class MedicModel {
+public class Patient {
 
-    private String firstName, lastName,email,address,phone,specializare;
-
-    public MedicModel(){
+    private String firstName, lastName,email,address,phone,gender;
+    public Patient(){
 
     }
-    public MedicModel(String firstName, String lastName, String email, String address, String phone, String specializare) {
+    public Patient(String firstName, String lastName, String email, String address, String phone, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.phone = phone;
-        this.specializare = specializare;
+        this.gender = gender;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFistName(String fistName) {
+        this.firstName = fistName;
     }
 
     public void setLastName(String lastName) {
@@ -36,8 +35,8 @@ public class MedicModel {
         this.phone = phone;
     }
 
-    public void setSpecializare(String specializare) {
-        this.specializare = specializare;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getFirstName() {
@@ -60,7 +59,7 @@ public class MedicModel {
         return phone;
     }
 
-    public String getSpecializare() {
-        return specializare;
+    public String getGender() {
+        return gender;
     }
 }

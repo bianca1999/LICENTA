@@ -1,4 +1,4 @@
-package com.example.licenta.patient;
+package com.example.licenta.register;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,12 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.licenta.R;
+import com.example.licenta.login.LoginPatientActivity;
+import com.example.licenta.model.Patient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -26,8 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
 
 public class RegisterPatientActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -80,8 +78,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
                     ||!TextUtils.isEmpty(addressText)
                     ||!TextUtils.isEmpty(genderText)
                     ||!TextUtils.isEmpty(passwordText)) {
-                progressDialog.setTitle("Registering patient");
-                progressDialog.setMessage("Please wait a second...");
+                progressDialog.setTitle("Inregistrare pacient");
+                progressDialog.setMessage("Va rugam sa asteptati pentru a inregistra datele dumneavoastra...");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
@@ -113,7 +111,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
                             FirebaseUser current_user=FirebaseAuth.getInstance().getCurrentUser();
                             String uid=current_user.getUid();
                             referencefirebaseDatabase=FirebaseDatabase.getInstance().getReference();
-                            PatientModel patientModel=new PatientModel(firstNameText,lastNameText,emailText,addressText,phoneText,genderText);
+                            Patient patientModel=new Patient(firstNameText,lastNameText,emailText,addressText,phoneText,genderText);
                             referencefirebaseDatabase.child("Patients").child(uid).setValue(patientModel);
                             progressDialog.dismiss();
                             sendToLoginPage();
