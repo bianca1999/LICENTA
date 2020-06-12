@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.licenta.fragments.MedicChatsFragment;
-import com.example.licenta.fragments.MedicRequestsFragment;
 import com.example.licenta.fragments.PatientsFragment;
 
 public class MedicPagerAdapter extends FragmentPagerAdapter {
@@ -14,7 +13,6 @@ public class MedicPagerAdapter extends FragmentPagerAdapter {
     public MedicPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
         childFragments=new Fragment[]{
-                new MedicRequestsFragment(),
                 new MedicChatsFragment(),
                 new PatientsFragment()
         };
@@ -34,14 +32,10 @@ public class MedicPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if(position==0)
-            return "Requests";
-        else {
-            if (position == 1)
-                return "Conversations";
+            return "Conversatii";
 
-            else
-                return "My patients";
+        else
+            return "Pacienti";
         }
-    }
 }
 

@@ -1,18 +1,19 @@
 package com.example.licenta.model;
 
 public class Doctor {
-    private String firstName;
-    private String lastName;
-    private String specializare;
 
-    public Doctor(String firstName, String lastName, String specializare) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.specializare = specializare;
-    }
+    private String firstName, lastName,email,address,phone,specializare;
 
     public Doctor(){
 
+    }
+    public Doctor(String firstName, String lastName, String email, String address, String phone, String specializare) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.specializare = specializare;
     }
 
     public void setFirstName(String firstName) {
@@ -21,6 +22,18 @@ public class Doctor {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public void setSpecializare(String specializare) {
@@ -33,6 +46,18 @@ public class Doctor {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
     }
 
     public String getSpecializare() {

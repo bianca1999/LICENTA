@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.example.licenta.R;
 import com.example.licenta.login.LoginMedicActivity;
-import com.example.licenta.MedicModel;
+import com.example.licenta.model.Doctor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -112,8 +112,8 @@ public class RegisterMedicActivity extends AppCompatActivity {
                             if(current_user != null) {
                                 String uid = current_user.getUid();
                                 referencefirebaseDatabase = FirebaseDatabase.getInstance().getReference();
-                                MedicModel medicModel = new MedicModel(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText);
-                                referencefirebaseDatabase.child("Doctors").child(uid).setValue(medicModel);
+                                Doctor doctor = new Doctor(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText);
+                                referencefirebaseDatabase.child("Doctors").child(uid).setValue(doctor);
                                 progressDialog.dismiss();
                                 sendToLoginPage();
                             }
