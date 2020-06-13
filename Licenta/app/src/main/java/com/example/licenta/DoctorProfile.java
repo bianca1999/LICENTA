@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.licenta.R;
@@ -18,9 +19,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class DoctorProfile extends AppCompatActivity {
-    private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress;
+    private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress,ratingTextView,afterRating;
     private DatabaseReference databaseReference;
-    private Button message;
+    private Button messageButton;
+    private Button ratingButton, sendRating;
+    private RatingBar ratingBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +36,11 @@ public class DoctorProfile extends AppCompatActivity {
         doctorEmail=findViewById(R.id.email);
         doctorAddress=findViewById(R.id.address);
         specializare=findViewById(R.id.specializare);
-        message=findViewById(R.id.intrebare);
+        messageButton=findViewById(R.id.intrebare);
+        ratingButton=findViewById(R.id.rating);
 
-        message.setOnClickListener(new View.OnClickListener() {
+
+       messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(), WindowChatActivity.class);
@@ -42,6 +48,40 @@ public class DoctorProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+       ratingButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               sendRating=findViewById(R.id.sendRating);
+               ratingBar=findViewById(R.id.ratingBar);
+               ratingTextView=findViewById(R.id.nrRating);
+               afterRating=findViewById(R.id.afterRating);
+
+               ratingTextView.setVisibility(View.VISIBLE);
+               ratingBar.setVisibility(View.VISIBLE);
+               sendRating.setVisibility(View.VISIBLE);
+
+
+               ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                   @Override
+                   public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                        ratingTextView.setText(String.valueOf(rating));
+                   }
+               });
+
+               sendRating.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                       ratingBar.setVisibility(View.GONE);
+                       ratingTextView.setVisibility(View.GONE);
+                       sendRating.setVisibility(View.GONE);
+                       afterRating.setVisibility(View.VISIBLE);
+
+                   }
+               });
+
+           }
+       });
 
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
         databaseReference.addValueEventListener(new ValueEventListener() {

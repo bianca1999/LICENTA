@@ -75,28 +75,35 @@ public class PatientChatsFragment extends Fragment {
         FirebaseRecyclerAdapter<Chat, PatientChatsFragment.ChatsViewHolder> firebaseRecyclerAdapter=
                 new FirebaseRecyclerAdapter<Chat, PatientChatsFragment.ChatsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull PatientChatsFragment.ChatsViewHolder holder, int position, @NonNull Chat chat) {
+            protected void onBindViewHolder(@NonNull final PatientChatsFragment.ChatsViewHolder holder, int position, @NonNull Chat chat) {
 
                 final String receiver=chat.getReceiver();
-                final String sender= chat.getSender();
-                if(sender==current_user_id) {
-                    holder.setName(chat.getReceiver(),chat.getReceiver());
-                    holder.setLastMessage(chat.getMessage());
-                }
-                else {
-                    holder.setName(chat.getSender(),chat.getSender());
-                    holder.setLastMessage(chat.getMessage());
-                }
-
-                holder.view.setOnClickListener(new View.OnClickListener() {
+                final String message=chat.getMessage();
+                databaseReference=FirebaseDatabase.getInstance().getReference().child("Doctors").child(receiver);
+                databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getContext(), WindowChatActivity.class);
-                        intent.putExtra("doctor_id",sender);
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        String firstName=dataSnapshot.child("firstName").getValue().toString();
+                        String lastName=dataSnapshot.child("lastName").getValue().toString();
+                        holder.setName(firstName,lastName);
+                        holder.setLastMessage(message);
+                        holder.view.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getContext(), WindowChatActivity.class);
+                                intent.putExtra("doctor_id",receiver);
 
-                        startActivity(intent);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
+
             }
 
 

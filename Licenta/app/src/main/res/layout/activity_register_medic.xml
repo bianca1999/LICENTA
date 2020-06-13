@@ -117,26 +117,25 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintHorizontal_bias="0.727"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.456" />
+        app:layout_constraintVertical_bias="0.862" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="318dp"
         android:layout_height="41dp"
+        android:drawableLeft="@android:drawable/ic_secure"
         android:ems="10"
         android:hint=" Parola"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/specializareLayout"
-        app:layout_constraintVertical_bias="0.125"
-        android:drawableLeft="@android:drawable/ic_secure"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/experientaLayout"
+        app:layout_constraintVertical_bias="0.126" />
 
     <LinearLayout
         android:id="@+id/specializareLayout"
@@ -166,4 +165,63 @@
             tools:layout_editor_absoluteY="473dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/titluLayout"
+        android:layout_width="312dp"
+        android:layout_height="41dp"
+        android:orientation="horizontal"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/specializareLayout"
+        app:layout_constraintVertical_bias="0.098">
+
+        <TextView
+            android:id="@+id/TitluTextView"
+            android:layout_width="106dp"
+            android:layout_height="33dp"
+            android:text="Titlu"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="473dp" />
+
+        <Spinner
+            android:id="@+id/spinnerTitlu"
+            android:layout_width="201dp"
+            android:layout_height="34dp"
+            tools:layout_editor_absoluteX="169dp"
+            tools:layout_editor_absoluteY="473dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/experientaLayout"
+        android:layout_width="312dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="20dp"
+
+
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titluLayout">
+
+        <TextView
+            android:id="@+id/experientaTextView"
+            android:layout_width="106dp"
+            android:layout_height="33dp"
+            android:text="Experienta"
+            android:textSize="18sp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="473dp" />
+
+        <Spinner
+            android:id="@+id/spinnerExperienta"
+            android:layout_width="201dp"
+            android:layout_height="34dp"
+            tools:layout_editor_absoluteX="169dp"
+            tools:layout_editor_absoluteY="473dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

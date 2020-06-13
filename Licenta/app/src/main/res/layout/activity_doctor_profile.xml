@@ -10,72 +10,103 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/toolBarColor">
+        android:background="@color/tabBarColor">
+
 
         <RelativeLayout
-            android:id="@+id/imgUser"
-            android:layout_width="wrap_content"
+            android:id="@+id/i"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true">
+            android:gravity="center_vertical">
 
             <ImageView
                 android:id="@+id/userImage"
-                android:layout_width="257dp"
+                android:layout_width="match_parent"
                 android:layout_height="163dp"
-                android:padding="5pt"
                 android:src="@drawable/user_img" />
 
-        </RelativeLayout>
-        <TextView
+            <TextView
             android:id="@+id/doctorName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bianca"
             android:textSize="32sp"
             android:textStyle="normal|bold"
-            android:layout_below="@+id/imgUser"
+            android:layout_below="@+id/userImage"
             android:layout_centerHorizontal="true"
             android:paddingBottom="10dp"
             android:fontFamily="sans-serif-light"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/doctorName"
+            android:id="@+id/buttons">
+
+            <Button
+                android:id="@+id/intrebare"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/toolBarColor"
+                android:drawableLeft="@android:drawable/sym_action_chat"
+                android:text="Scrie o intrebare"
+                android:textColor="@color/chatColor"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
+
+            <Button
+                android:id="@+id/rating"
+                android:paddingLeft="40dp"
+                android:paddingRight="40dp"
+                android:layout_width="212dp"
+                android:layout_height="match_parent"
+                android:background="@color/toolBarColor"
+                android:drawableLeft="@android:drawable/btn_star_big_on"
+                android:text="Recenzie"
+                android:textColor="@color/chatColor"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/informatiiPacient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/header"
-        android:layout_marginTop="0dp">
+        android:layout_below="@+id/header">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="22dp"
             android:layout_marginRight="30dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Email"
-                    android:textSize="15sp"
                     android:textColor="@color/toolBarColor"
-                    />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@android:drawable/sym_action_email"
                     android:fontFamily="sans-serif-light"
                     android:text="joey@sharenofood.com"
                     android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:drawableLeft="@android:drawable/sym_action_email"
-                    />
+                    android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
@@ -87,7 +118,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -118,7 +149,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -149,7 +180,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -174,30 +205,64 @@
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp" />
 
-            </LinearLayout>
 
+
+
+            </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingLeft="43dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="54dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="50dp"
+                        android:visibility="gone"
+                        />
+
+                    <TextView
+                        android:id="@+id/nrRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:text="5.0"
+                        android:textSize="30dp"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
                 <Button
-                    android:id="@+id/intrebare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@color/toolBarColor"
-                    android:drawableLeft="@android:drawable/sym_action_chat"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Scrie o intrebare"
-                    android:textColor="@color/chatColor"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:id="@+id/sendRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trimite"
+                    android:gravity="center_horizontal"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/afterRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Multumim pentru rating!"
+                    android:visibility="gone"
+                    />
             </LinearLayout>
+
+
 
 
         </LinearLayout>
+
+
+
+
 
 
     </RelativeLayout>
