@@ -35,10 +35,19 @@ public class PatientProfile extends AppCompatActivity {
         userBirthday=findViewById(R.id.birthday);
         userName=findViewById(R.id.userName);
 
-
+        final String current_id=getIntent().getStringExtra("patient_id");
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
         String current_user_uid=currentUser.getUid();
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(current_user_uid);
+        if(!current_id.isEmpty()){
+            databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(current_id);
+        }
+        else{
+            databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(current_user_uid);
+
+        }
+
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

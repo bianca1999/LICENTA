@@ -2,6 +2,7 @@ package com.example.licenta;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -25,26 +26,38 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class WindowChatActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
+
     private TextView displayName, specializare;
     private ImageButton buttonSend;
     private EditText textSend;
     private RecyclerView messageList;
+
+    MessageAdapter messageAdapter;
+    List<Chat> chatList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_chat);
 
+
         displayName = findViewById(R.id.displayName);
         specializare = findViewById(R.id.specializare);
         buttonSend = findViewById(R.id.sendBtn);
         textSend = findViewById(R.id.mesaj);
         messageList = findViewById(R.id.messageRecView);
+        messageList.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+        linearLayoutManager.setStackFromEnd(true);
+        messageList.setLayoutManager(linearLayoutManager);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final String current_user_id = currentUser.getUid();
@@ -55,20 +68,13 @@ public class WindowChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mesaj = textSend.getText().toString();
                 if (!mesaj.equals("")) {
+                    sendMessage(doctor_id,current_user_id,mesaj);
 
                 }
+                textSend.setText("");
             }
         });
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mesaj = textSend.getText().toString();
-                if (!mesaj.equals("")) {
-                    sendMessage(current_user_id, doctor_id, mesaj);
-                }
-            }
-        });
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -77,6 +83,7 @@ public class WindowChatActivity extends AppCompatActivity {
                 String specializareT = dataSnapshot.child("specializare").getValue().toString();
                 displayName.setText("Dr. " + firstName + " " + lastName);
                 specializare.setText(specializareT);
+                readMessage(current_user_id,doctor_id);
             }
 
             @Override
@@ -87,69 +94,6 @@ public class WindowChatActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Query query = FirebaseDatabase.getInstance()
-                .getReference()
-                .child("Chats");
-
-        FirebaseRecyclerOptions<Chat> options =
-                new FirebaseRecyclerOptions.Builder<Chat>()
-                        .setQuery(query, Chat.class)
-                        .build();
-        FirebaseRecyclerAdapter<Chat, WindowChatActivity.ChatViewHolder> firebaseRecyclerAdapter =
-                new FirebaseRecyclerAdapter<Chat, ChatViewHolder>(options) {
-                    @Override
-                    protected void onBindViewHolder(ChatViewHolder holder, int position, Chat chat) {
-                        holder.setSender(chat.getSender());
-                        holder.setReceiver(chat.getReceiver());
-                        holder.setMessage(chat.getMessage());
-                        final String doctor_id = getRef(position).getKey();
-                        holder.view.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(WindowChatActivity.this, WindowChatActivity.class);
-                                intent.putExtra("doctor_id", doctor_id);
-
-                                startActivity(intent);
-                            }
-                        });
-                    }
-
-                    @NonNull
-                    @Override
-                    public ChatViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                        View view = LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.doctor_simple_layout, parent, false);
-                        return new ChatViewHolder(view);
-                    }
-                };
-        firebaseRecyclerAdapter.startListening();
-        messageList.setAdapter(firebaseRecyclerAdapter);
-
-    }
-
-    public class ChatViewHolder extends RecyclerView.ViewHolder {
-        View view;
-
-        public ChatViewHolder(@NonNull View itemView) {
-            super(itemView);
-            view = itemView;
-        }
-           public void setSender(String sender){
-            //TextView sender=view.findViewById(R.id.doctorName);
-        }
-
-        public void setReceiver(String receiver){
-            //TextView sender=view.findViewById(R.id.doctorName);
-        }
-
-        public void setMessage(String message){
-            //TextView sender=view.findViewById(R.id.doctorName);
-        }
-    }
 
 
     public void sendMessage(String receiver,String sender, String message){
@@ -163,4 +107,32 @@ public class WindowChatActivity extends AppCompatActivity {
         databaseReference.child("Chats").push().setValue(chatObject);
 
     }
+
+    public void readMessage(final String currend_user_id, final String user_id){
+        chatList=new ArrayList<>();
+        databaseReference=FirebaseDatabase.getInstance().getReference("Chats");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                chatList.clear();
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    Chat chat=dataSnapshot1.getValue(Chat.class);
+                    if(chat.getReceiver().equals(user_id)
+                        && chat.getSender().equals(currend_user_id)){
+                        chatList.add(chat);
+                    }
+                    messageAdapter=new MessageAdapter(WindowChatActivity.this,chatList);
+                    messageList.setAdapter(messageAdapter);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
 }

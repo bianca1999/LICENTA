@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
+    <include layout="@layout/bar_layout"
+    android:id="@+id/main_app_bar" />
     <Button
         android:id="@+id/medicButton"
         android:layout_width="168dp"

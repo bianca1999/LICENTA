@@ -11,39 +11,32 @@
     tools:context=".StartPatientActivity"
     tools:openDrawer="start">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appBar">
-        <include
-            android:id="@+id/main_app_bar"
-            layout="@layout/bar_layout" />
-
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/toolBarColor"
-            app:tabTextColor="@color/chatColor"
-            app:tabSelectedTextColor="@color/tabBarColor"
-            />
+            android:id="@+id/appBar">
+            <include
+                android:id="@+id/main_app_bar"
+                layout="@layout/bar_layout" />
 
-    </com.google.android.material.appbar.AppBarLayout>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/appBar">
-    </androidx.viewpager.widget.ViewPager>
-</RelativeLayout>
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/toolBarColor"
+                app:tabTextColor="@color/chatColor"
+                app:tabSelectedTextColor="@color/tabBarColor" />
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appBar">
+        </androidx.viewpager.widget.ViewPager>
+    </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

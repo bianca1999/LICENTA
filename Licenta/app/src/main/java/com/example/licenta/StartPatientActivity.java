@@ -47,7 +47,7 @@ public class StartPatientActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawable);
         toolbar = findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("MedChat");
+        getSupportActionBar().setTitle("Pacient App");
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         NavigationView navigationView=findViewById(R.id.navView);
@@ -120,14 +120,6 @@ public class StartPatientActivity extends AppCompatActivity {
             case R.id.patientLogout:
                 FirebaseAuth.getInstance().signOut();
                 sendToWelcomePage();
-                break;
-            case R.id.patientSettings:
-                Intent profieIntent = new Intent(this, PatientProfile.class);
-                this.startActivity(profieIntent);
-                break;
-            case R.id.allDoctors:
-                Intent intent = new Intent(this, AllDoctors.class);
-                this.startActivity(intent);
                 break;
             default:
                 return true;

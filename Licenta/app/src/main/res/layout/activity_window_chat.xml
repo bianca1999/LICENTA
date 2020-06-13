@@ -7,118 +7,117 @@
     android:background="@color/chatColor"
     tools:context=".WindowChatActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/tabBarColor"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="-7dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="82dp"
-            android:layout_height="match_parent"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            app:srcCompat="@drawable/user_img" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/userImage"
-            android:layout_toRightOf="@+id/userImage">
-            <TextView
-                android:id="@+id/displayName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingLeft="8dp"
-
-                android:text="DisplayName"
-                android:textColor="@color/chatColor"
-                android:textSize="22dp" />
-
-            <TextView
-                android:id="@+id/specializare"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/displayName"
-                android:paddingLeft="20dp"
-                android:layout_weight="1"
-                android:text="Cardiologie" />
-        </RelativeLayout>
-
-
-        <RelativeLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="58dp"
-            >
+            android:layout_height="match_parent"
+            android:background="@color/tabBarColor">
 
+            <ImageView
+                android:id="@+id/userImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:srcCompat="@drawable/user_img" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/displayName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="DisplayName"
+                    android:textColor="@color/chatColor"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/specializare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/displayName"
+                    android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:text="Cardiologie"
+                    android:textSize="14dp" />
+            </RelativeLayout>
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
             <ImageView
                 android:id="@+id/video"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="90dp"
-                android:paddingRight="10dp"
-                app:srcCompat="@android:drawable/presence_video_online" />
-        </RelativeLayout>
-    </LinearLayout>
-    <View
-        android:id="@+id/view"
-        android:layout_below="@+id/topbar"
-        android:layout_width="wrap_content"
-        android:layout_height="580dp"
-        android:layout_weight="1" />
+                android:layout_height="40dp"
+                android:layout_marginLeft="40dp"
+                app:srcCompat="@android:drawable/ic_menu_call" />
+
+    <ImageView
+        android:id="@+id/call"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignEnd="@+id/video"
+
+        android:layout_alignRight="@+id/video"
+        android:layout_marginEnd="-132dp"
+        android:layout_marginRight="-132dp"
+        app:srcCompat="@android:drawable/presence_video_online" />
+
+</RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageRecView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topbar"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom"
+        android:layout_below="@+id/topbar"
+        android:layout_marginTop="-1dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginBottom="1dp">
 
+    </androidx.recyclerview.widget.RecyclerView>
 
-
-    <LinearLayout
-        android:id="@+id/bottom"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/view"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
         android:background="@color/white"
-        android:orientation="horizontal">
-
-        <ImageButton
-            android:id="@+id/addFile"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            app:srcCompat="@android:drawable/ic_input_add" />
+        android:padding="5dp"
+        android:id="@+id/bottom">
 
         <EditText
             android:id="@+id/mesaj"
-            android:layout_width="360dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:gravity="start|top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/sendBtn"
             android:background="@color/white"
-            android:hint="Scrie o intrebare..."
-            android:inputType="textMultiLine" />
+            android:gravity="start|top"
+            android:hint="Scrie o intrebare..." />
+
 
         <ImageButton
             android:id="@+id/sendBtn"
-            android:layout_width="83dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_weight="1"
-            android:background="@color/white"
             app:srcCompat="@android:drawable/ic_menu_send" />
 
 
-    </LinearLayout>
-
-
-
-
+    </RelativeLayout>
 </RelativeLayout>

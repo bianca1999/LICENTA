@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.licenta.R;
 import com.example.licenta.DoctorProfile;
+import com.example.licenta.model.Doctor;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,6 +37,7 @@ public class DoctorsFragment extends Fragment {
                              Bundle savedInstanceState) {
         mainView= inflater.inflate(R.layout.fragment_doctors, container, false);
         doctorList=mainView.findViewById(R.id.doctorsList);
+
         firebaseAuth=FirebaseAuth.getInstance();
         current_user_id=firebaseAuth.getCurrentUser().getUid();
         databaseReference=FirebaseDatabase.getInstance().getReference().child("Doctors");

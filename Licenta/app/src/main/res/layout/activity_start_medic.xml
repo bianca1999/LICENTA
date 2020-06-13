@@ -9,34 +9,34 @@
     tools:openDrawer="start"
     tools:context=".StartMedicActivity"
     android:fitsSystemWindows="true"
+    android:id="@+id/drawable"
+
     >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/appBar">
-
-        <include
-            android:id="@+id/main_app_bar"
-            layout="@layout/bar_layout" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/toolBarColor" />
-    </com.google.android.material.appbar.AppBarLayout>
+            android:id="@+id/appBar">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/appBar">
-    </androidx.viewpager.widget.ViewPager>
+            <include
+                android:id="@+id/main_app_bar"
+                layout="@layout/bar_layout" />
 
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/toolBarColor" />
+        </com.google.android.material.appbar.AppBarLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appBar">
+        </androidx.viewpager.widget.ViewPager>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -47,5 +47,4 @@
         app:headerLayout="@layout/side_bar_profile"
         android:layout_gravity="left|start"
         android:id="@+id/navView"/>
-
 </androidx.drawerlayout.widget.DrawerLayout>
