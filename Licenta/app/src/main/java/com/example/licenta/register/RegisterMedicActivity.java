@@ -32,9 +32,9 @@ public class RegisterMedicActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference referencefirebaseDatabase;
     private EditText lastName, firstName, email, phone, address, password;
-    private Spinner specializariSpinner;
+    private Spinner specializariSpinner, titleSpinner;
     private Button medicRegisterButton;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +49,35 @@ public class RegisterMedicActivity extends AppCompatActivity {
         password=findViewById((R.id.password));
         medicRegisterButton=findViewById(R.id.registerButton);
         mAuth=FirebaseAuth.getInstance();
-
         progressDialog=new ProgressDialog(this);
+
         specializariSpinner=findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.Specializari, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        specializariSpinner.setAdapter(adapter);
+        ArrayAdapter<CharSequence> specializariAdapter=ArrayAdapter.createFromResource(this,R.array.Specializari, android.R.layout.simple_spinner_item);
+        specializariAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        specializariSpinner.setAdapter(specializariAdapter);
+
+        titleSpinner=findViewById(R.id.titluSpinner);
+        ArrayAdapter<CharSequence> titleAdapter=ArrayAdapter.createFromResource(this,R.array.title, android.R.layout.simple_spinner_item);
+        specializariAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        titleSpinner.setAdapter(titleAdapter);
+
+        titleSpinner.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemValue=parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        }));
+
+
         specializariSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String itemValue=parent.getItemAtPosition(position).toString();
-                //Toast.makeText(getApplicationContext(),"Specializare"+itemValue,Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -78,6 +96,7 @@ public class RegisterMedicActivity extends AppCompatActivity {
                 String addressText=address.getText().toString();
                 String passwordText=password.getText().toString();
                 String specializareText=specializariSpinner.getSelectedItem().toString();
+                String titleText=titleSpinner.getSelectedItem().toString();
 
                 if(!TextUtils.isEmpty(lastNameText)
                         || !TextUtils.isEmpty(firstNameText)
@@ -85,14 +104,14 @@ public class RegisterMedicActivity extends AppCompatActivity {
                         || !TextUtils.isEmpty(phoneText)
                         ||!TextUtils.isEmpty(addressText)
                         ||!TextUtils.isEmpty(passwordText)) {
-                    progressDialog.setTitle("Registering doctor");
-                    progressDialog.setMessage("Please wait a second...");
+                    progressDialog.setTitle("Inregistrare medic");
+                    progressDialog.setMessage("Va rugam sa asteptati pentru a inregistra datele dumneavoastra...");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
-                    registerMedic(lastNameText, firstNameText, emailText, phoneText, addressText, specializareText, passwordText);
+                    registerMedic(lastNameText, firstNameText, emailText, phoneText, addressText, specializareText,titleText, passwordText);
                 }
                 else{
-                    Toast.makeText(RegisterMedicActivity.this, "Please fill all boxes.",
+                    Toast.makeText(RegisterMedicActivity.this, "Va rugam sa completati toate campurile!",
                             Toast.LENGTH_SHORT).show();
 
                 }
@@ -101,7 +120,7 @@ public class RegisterMedicActivity extends AppCompatActivity {
 
     }
 
-    private void registerMedic(final String lastNameText,final String firstNameText,final String emailText, final String phoneText,final String addressText, final String specializareText,final String passwordText) {
+    private void registerMedic(final String lastNameText,final String firstNameText,final String emailText, final String phoneText,final String addressText, final String specializareText,final String titleText,final String passwordText) {
         mAuth.createUserWithEmailAndPassword(emailText, passwordText)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -112,7 +131,7 @@ public class RegisterMedicActivity extends AppCompatActivity {
                             if(current_user != null) {
                                 String uid = current_user.getUid();
                                 referencefirebaseDatabase = FirebaseDatabase.getInstance().getReference();
-                                Doctor doctor = new Doctor(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText);
+                                Doctor doctor = new Doctor(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText,titleText);
                                 referencefirebaseDatabase.child("Doctors").child(uid).setValue(doctor);
                                 progressDialog.dismiss();
                                 sendToLoginPage();
@@ -120,7 +139,7 @@ public class RegisterMedicActivity extends AppCompatActivity {
 
                         } else {
                             progressDialog.hide();
-                            Toast.makeText(RegisterMedicActivity.this, "Authentication failed.",
+                            Toast.makeText(RegisterMedicActivity.this, "Inregintrare fara succes!",
                                     Toast.LENGTH_SHORT).show();
 
                         }

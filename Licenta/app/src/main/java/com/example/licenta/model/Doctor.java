@@ -2,18 +2,27 @@ package com.example.licenta.model;
 
 public class Doctor {
 
-    private String firstName, lastName,email,address,phone,specializare;
+    private String firstName, lastName,email,address,phone,specializare,title;
 
     public Doctor(){
 
     }
-    public Doctor(String firstName, String lastName, String email, String address, String phone, String specializare) {
+    public Doctor(String firstName, String lastName, String email, String address, String phone, String specializare, String title) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.phone = phone;
         this.specializare = specializare;
+        this.title=title;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setFirstName(String firstName) {
