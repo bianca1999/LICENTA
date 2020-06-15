@@ -1,35 +1,38 @@
 package com.example.licenta;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.licenta.R;
-import com.example.licenta.WindowChatActivity;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class DoctorProfile extends AppCompatActivity {
-    private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress,ratingTextView,afterRating;
+    private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress, recenzie;
     private DatabaseReference databaseReference;
-    private Button messageButton;
-    private Button ratingButton, sendRating;
-    private RatingBar ratingBar;
+    private Button messageButton,ratingButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
-
         final String doctor_id=getIntent().getStringExtra("doctor_id");
         doctorName=findViewById(R.id.doctorName);
         doctorPhone=findViewById(R.id.phone);
@@ -38,50 +41,24 @@ public class DoctorProfile extends AppCompatActivity {
         specializare=findViewById(R.id.specializare);
         messageButton=findViewById(R.id.intrebare);
         ratingButton=findViewById(R.id.rating);
+        recenzie=findViewById(R.id.recenzie);
 
-
+        showRating(doctor_id);
+        ratingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setRating(doctor_id);
+                showRating(doctor_id);
+            }
+        });
        messageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), WindowChatActivity.class);
+                Intent intent=new Intent(getApplicationContext(), WindowChatDoctorActivity.class);
                 intent.putExtra("doctor_id",doctor_id);
                 startActivity(intent);
             }
         });
-
-       ratingButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               sendRating=findViewById(R.id.sendRating);
-               ratingBar=findViewById(R.id.ratingBar);
-               ratingTextView=findViewById(R.id.nrRating);
-               afterRating=findViewById(R.id.afterRating);
-
-               ratingTextView.setVisibility(View.VISIBLE);
-               ratingBar.setVisibility(View.VISIBLE);
-               sendRating.setVisibility(View.VISIBLE);
-
-
-               ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                   @Override
-                   public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                        ratingTextView.setText(String.valueOf(rating));
-                   }
-               });
-
-               sendRating.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                   public void onClick(View v) {
-                       ratingBar.setVisibility(View.GONE);
-                       ratingTextView.setVisibility(View.GONE);
-                       sendRating.setVisibility(View.GONE);
-                       afterRating.setVisibility(View.VISIBLE);
-
-                   }
-               });
-
-           }
-       });
 
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -107,5 +84,83 @@ public class DoctorProfile extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void setRating(final String doctor_id){
+        final String current_user_id=FirebaseAuth.getInstance().getCurrentUser().getUid();
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.rating_layout, null);
+        final EditText reviewEditText=view.findViewById(R.id.recenzieEditText);
+        RatingBar ratingBar=view.findViewById(R.id.ratingBar);
+        final TextView ratingScore=view.findViewById(R.id.scoreRating);
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                ratingScore.setText(String.valueOf(rating));
+
+            }
+        });
+        dialog.setView(view).setPositiveButton("Trimite", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String reviewText=reviewEditText.getText().toString();
+                DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
+                if(reviewText.isEmpty()){
+                    HashMap<String,String> chatObject=new HashMap<>();
+                    chatObject.put("pacient",current_user_id);
+                    chatObject.put("medic",doctor_id);
+                    chatObject.put("numar_stele",ratingScore.getText().toString());
+                    databaseReference.child("Ratings").push().setValue(chatObject);
+                }
+                else{
+                    HashMap<String,String> chatObject=new HashMap<>();
+                    chatObject.put("pacient",current_user_id);
+                    chatObject.put("medic",doctor_id);
+                    chatObject.put("numar_stele",ratingScore.getText().toString());
+                    chatObject.put("recenzire",reviewText);
+                    databaseReference.child("Ratings").push().setValue(chatObject);
+
+                }
+            }
+        });
+
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
+
+    }
+
+    public void showRating(final String doctor_id){
+            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("Ratings");
+
+
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    float count=0,sum=0;
+                    for(DataSnapshot dtSnapshot:dataSnapshot.getChildren()){
+                        if(dtSnapshot.child("medic").getValue().toString().equals(doctor_id)){
+                            sum=sum+ Float.parseFloat(dtSnapshot.child("numar_stele").getValue().toString());
+                            count++;
+                        }
+                    }
+                    sum=sum/count;
+                    String result;
+                    if(sum!=0){
+                        result=String.valueOf(sum);
+                        recenzie.setText(result);
+                    }
+                    else{
+                        recenzie.setText("Nicio recenzie");
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
     }
 }

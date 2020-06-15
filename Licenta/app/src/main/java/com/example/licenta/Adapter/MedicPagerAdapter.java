@@ -1,20 +1,20 @@
-package com.example.licenta;
+package com.example.licenta.Adapter;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.licenta.fragments.DoctorsFragment;
-import com.example.licenta.fragments.PatientChatsFragment;
+import com.example.licenta.fragments.MedicChatsFragment;
+import com.example.licenta.fragments.PatientsFragment;
 
-
-class PatientPagerAdapter extends FragmentPagerAdapter {
+public class MedicPagerAdapter extends FragmentPagerAdapter {
     private Fragment[] childFragments;
-    public PatientPagerAdapter(@NonNull FragmentManager fm) {
+    public MedicPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
         childFragments=new Fragment[]{
-                new PatientChatsFragment(),
-                new DoctorsFragment()
+                new MedicChatsFragment(),
+                new PatientsFragment()
         };
     }
 
@@ -33,7 +33,9 @@ class PatientPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         if(position==0)
             return "Conversatii";
+
         else
-            return "Medici";
-    }
+            return "Pacienti";
+        }
 }
+

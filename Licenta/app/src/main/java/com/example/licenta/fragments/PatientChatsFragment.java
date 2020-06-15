@@ -11,14 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.licenta.DoctorProfile;
 import com.example.licenta.R;
-import com.example.licenta.WindowChatActivity;
+import com.example.licenta.WindowChatDoctorActivity;
 import com.example.licenta.model.Chat;
-import com.example.licenta.model.ChatList;
-import com.example.licenta.model.Doctor;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,20 +27,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PatientChatsFragment extends Fragment {
     private RecyclerView chatList;
     private DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
-    String current_user_id;
+    private FirebaseAuth firebaseAuth;
+    private String current_user_id;
     private View mainView;
+    private String theLastMessage;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,10 +57,10 @@ public class PatientChatsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+        final ArrayList<String> doctorList=new ArrayList<>();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("Chats");
+                .child("Chats").orderByChild("receiver");
 
         FirebaseRecyclerOptions<Chat> options =
                 new FirebaseRecyclerOptions.Builder<Chat>()
@@ -76,37 +70,38 @@ public class PatientChatsFragment extends Fragment {
                 new FirebaseRecyclerAdapter<Chat, PatientChatsFragment.ChatsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final PatientChatsFragment.ChatsViewHolder holder, int position, @NonNull Chat chat) {
-
-                final String receiver=chat.getReceiver();
-                final String message=chat.getMessage();
-                databaseReference=FirebaseDatabase.getInstance().getReference().child("Doctors").child(receiver);
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        String firstName=dataSnapshot.child("firstName").getValue().toString();
-                        String lastName=dataSnapshot.child("lastName").getValue().toString();
-                        holder.setName(firstName,lastName);
-                        holder.setLastMessage(message);
-                        holder.view.setOnClickListener(new View.OnClickListener() {
+                final String receiver = chat.getReceiver();
+                final String sender = chat.getSender();
+                        if (sender.equals(current_user_id)) {
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(receiver);
+                        }
+                        else {
+                            if (receiver.equals(current_user_id))
+                                databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(sender);
+                        }
+                        databaseReference.addValueEventListener(new ValueEventListener() {
                             @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(getContext(), WindowChatActivity.class);
-                                intent.putExtra("doctor_id",receiver);
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                String firstName = dataSnapshot.child("firstName").getValue().toString();
+                                String lastName = dataSnapshot.child("lastName").getValue().toString();
+                                holder.doctorName.setText("Dr. " + firstName + " " + lastName);
+                                lastMessage(receiver, holder.lastMsg);
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(getContext(), WindowChatDoctorActivity.class);
+                                        intent.putExtra("doctor_id", receiver);
 
-                                startActivity(intent);
+                                        startActivity(intent);
+                                    }
+                                });
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
                             }
                         });
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                });
-
-            }
-
-
 
             @NonNull
             @Override
@@ -122,22 +117,48 @@ public class PatientChatsFragment extends Fragment {
 
     }
 
-    public class ChatsViewHolder extends RecyclerView.ViewHolder{
+    public static class ChatsViewHolder extends RecyclerView.ViewHolder{
         View view;
+        TextView doctorName;
+        TextView lastMsg;
+        RelativeLayout rowChat;
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
+            doctorName=view.findViewById(R.id.doctorName);
+            lastMsg=view.findViewById(R.id.specializare);
+            rowChat=view.findViewById(R.id.rowChat);
         }
+    }
 
-        public void setName(String firstName,String lastName){
-            TextView doctorName=view.findViewById(R.id.doctorName);
-            doctorName.setText("Dr. "+firstName+ " " + lastName);
+    private void lastMessage(final String userid, final TextView last_msg){
+        theLastMessage = "default";
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    Chat chat = snapshot.getValue(Chat.class);
+                    if (firebaseUser != null && chat != null) {
+                        if (chat.getReceiver().equals(firebaseUser.getUid())
+                                && chat.getSender().equals(userid) ||
+                                chat.getReceiver().equals(userid) &&
+                                        chat.getSender().equals(firebaseUser.getUid())) {
+                            theLastMessage = chat.getMessage();
+                        }
+                    }
+                }
 
-        }
-        public void setLastMessage(String message){
-            TextView doctorMessage=view.findViewById(R.id.specializare);
-            doctorMessage.setText(message);
-        }
+                last_msg.setText(theLastMessage);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

@@ -23,7 +23,7 @@
         android:padding="13dp"
         android:id="@+id/showMsg"
         android:textSize="18dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:background="@drawable/bck_message_left"/>
 </RelativeLayout>
 

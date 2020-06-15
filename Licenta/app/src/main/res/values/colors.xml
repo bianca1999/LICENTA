@@ -9,5 +9,6 @@
     <color name="chatColor">#E5EAEC</color>
     <color name="white">#FEFFFF</color>
     <color name="chatWindow">#A3AAAE</color>
+    <color name="black">#090909</color>
 
 </resources>

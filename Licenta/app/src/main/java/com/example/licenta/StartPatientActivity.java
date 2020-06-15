@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.licenta.Adapter.PatientPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -74,11 +75,11 @@ public class StartPatientActivity extends AppCompatActivity {
                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
                 String emailt = dataSnapshot.child("email").getValue().toString();
+                String username=firstName + " " + lastName;
 
-                nume.setText(firstName + " " + lastName);
+                nume.setText(username);
                 email.setText(emailt);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -123,8 +124,6 @@ public class StartPatientActivity extends AppCompatActivity {
                 break;
             default:
                 return true;
-
-
         }
         return true;
     }

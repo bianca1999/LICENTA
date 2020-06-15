@@ -14,12 +14,12 @@
 
 
         <RelativeLayout
-            android:id="@+id/i"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
             <ImageView
+                android:layout_marginTop="14dp"
                 android:id="@+id/userImage"
                 android:layout_width="match_parent"
                 android:layout_height="163dp"
@@ -33,7 +33,7 @@
             android:textSize="32sp"
             android:textStyle="normal|bold"
             android:layout_below="@+id/userImage"
-            android:layout_centerHorizontal="true"
+            android:layout_centerHorizontal="true" android:textColor="@color/white"
             android:paddingBottom="10dp"
             android:fontFamily="sans-serif-light"/>
 
@@ -45,14 +45,21 @@
 
             <Button
                 android:id="@+id/intrebare"
-                android:layout_width="wrap_content"
+                android:layout_width="212dp"
                 android:layout_height="match_parent"
                 android:background="@color/toolBarColor"
-                android:drawableLeft="@android:drawable/sym_action_chat"
-                android:text="Scrie o intrebare"
-                android:textColor="@color/chatColor"
+                android:drawableLeft="@android:drawable/stat_notify_chat"
+                android:text="Contacteaza"
+                android:textColor="@color/white"
                 android:textSize="18dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:paddingLeft="25dp"
+                android:paddingRight="30dp"/>
+
+            <View
+            android:layout_width="2dp"
+            android:layout_height="58dp"
+            android:background="@android:color/darker_gray" />
 
 
             <Button
@@ -64,7 +71,7 @@
                 android:background="@color/toolBarColor"
                 android:drawableLeft="@android:drawable/btn_star_big_on"
                 android:text="Recenzie"
-                android:textColor="@color/chatColor"
+                android:textColor="@color/white"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -75,20 +82,20 @@
         android:id="@+id/informatiiPacient"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/header">
+        android:layout_below="@+id/header"
+        android:layout_marginTop="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -96,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:text="Email"
                     android:textColor="@color/toolBarColor"
-                    android:textSize="15sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/email"
@@ -111,7 +118,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/darker_gray" />
 
             </LinearLayout>
 
@@ -125,24 +133,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Telefon"
-                    android:textSize="13sp"
-                    android:textColor="@color/toolBarColor"/>
+                    android:textColor="@color/toolBarColor"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_phone_black_24dp"
                     android:fontFamily="sans-serif-light"
                     android:text="+1-202-555-0157"
                     android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:drawableLeft="@drawable/ic_phone_black_24dp"
-                    />
+                    android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/darker_gray" />
 
             </LinearLayout>
 
@@ -156,24 +164,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Address"
-                    android:textSize="13sp"
-                    android:textColor="@color/toolBarColor"/>
+                    android:textColor="@color/toolBarColor"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_add_location_black_24dp"
                     android:fontFamily="sans-serif-light"
                     android:text="Adresa"
                     android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:drawableLeft="@drawable/ic_add_location_black_24dp"
-                    />
+                    android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="15dp" />
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/darker_gray" />
 
             </LinearLayout>
 
@@ -188,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:text="Specializare"
                     android:textColor="@color/toolBarColor"
-                    android:textSize="13sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/specializare"
@@ -197,74 +205,50 @@
                     android:fontFamily="sans-serif-light"
                     android:text="Cardiologie"
                     android:textColor="#000000"
-                    android:textSize="18sp"
-                    />
+                    android:textSize="18sp" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="15dp" />
-
-
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/darker_gray" />
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <RatingBar
-                        android:id="@+id/ratingBar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="54dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="50dp"
-                        android:visibility="gone"
-                        />
-
-                    <TextView
-                        android:id="@+id/nrRating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="10dp"
-                        android:text="5.0"
-                        android:textSize="30dp"
-                        android:visibility="gone"
-                        />
-                </LinearLayout>
-                <Button
-                    android:id="@+id/sendRating"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Trimite"
-                    android:gravity="center_horizontal"
-                    android:visibility="gone"
-                    />
                 <TextView
-                    android:id="@+id/afterRating"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Multumim pentru rating!"
-                    android:visibility="gone"
-                    />
+                    android:text="Recenzii"
+                    android:textColor="@color/toolBarColor"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/recenzie"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_star_black_24dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Nicio recenzie"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@android:color/darker_gray" />
+
+
             </LinearLayout>
 
-
-
-
         </LinearLayout>
-
-
-
-
-
-
     </RelativeLayout>
 
 
