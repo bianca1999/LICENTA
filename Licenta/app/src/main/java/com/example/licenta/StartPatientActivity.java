@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class StartPatientActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -33,6 +36,7 @@ public class StartPatientActivity extends AppCompatActivity {
     private PatientPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
     private TextView nume, email;
+    private ImageView image;
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
     private DrawerLayout drawerLayout;
@@ -49,15 +53,43 @@ public class StartPatientActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Pacient App");
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         NavigationView navigationView=findViewById(R.id.navView);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                int id = menuItem.getItemId();
+                Intent intent;
+                switch(id) {
+                    case R.id.home:
+                    intent=new Intent(getApplicationContext(),StartPatientActivity.class);
+                    startActivity(intent);
+                    break;
+                    case R.id.Settings:
+                        intent=new Intent(getApplicationContext(),SettingsPacientActivity.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.logout:
+                        FirebaseAuth.getInstance().signOut();
+                        sendToWelcomePage();
+                        break;
+                    default:
+                        return true;
+                }
+                return true;
+            }
+        });
 
         View viewHeaderView=navigationView.getHeaderView(0);
         nume = viewHeaderView.findViewById(R.id.numePacient);
         email = viewHeaderView.findViewById(R.id.emailPacient);
+        image=viewHeaderView.findViewById(R.id.image);
         mAuth = FirebaseAuth.getInstance();
         viewPager = findViewById(R.id.viewPager);
 
@@ -75,10 +107,12 @@ public class StartPatientActivity extends AppCompatActivity {
                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
                 String emailt = dataSnapshot.child("email").getValue().toString();
+                String imagine=dataSnapshot.child("image").getValue().toString();
                 String username=firstName + " " + lastName;
 
                 nume.setText(username);
                 email.setText(emailt);
+                Picasso.with(getApplicationContext()).load(imagine).into(image);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -91,7 +125,7 @@ public class StartPatientActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.patient_menu, menu);
+        getMenuInflater().inflate(R.menu.navigation_drawer_menu, menu);
         return true;
     }
 
@@ -116,14 +150,6 @@ public class StartPatientActivity extends AppCompatActivity {
         super.onOptionsItemSelected(item);
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
-        }
-        switch (item.getItemId()) {
-            case R.id.patientLogout:
-                FirebaseAuth.getInstance().signOut();
-                sendToWelcomePage();
-                break;
-            default:
-                return true;
         }
         return true;
     }

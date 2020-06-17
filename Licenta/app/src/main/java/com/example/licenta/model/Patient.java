@@ -2,17 +2,26 @@ package com.example.licenta.model;
 
 public class Patient {
 
-    private String firstName, lastName,email,address,phone,gender;
+    private String firstName, lastName,email,address,phone,gender, image;
     public Patient(){
-
     }
-    public Patient(String firstName, String lastName, String email, String address, String phone, String gender) {
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Patient(String firstName, String lastName, String email, String address, String phone, String gender, String image) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.phone = phone;
         this.gender = gender;
+        this.image=image;
     }
 
     public void setFistName(String fistName) {

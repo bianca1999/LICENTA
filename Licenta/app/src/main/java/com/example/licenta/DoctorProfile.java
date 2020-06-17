@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -26,6 +28,7 @@ public class DoctorProfile extends AppCompatActivity {
     private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress, recenzie;
     private DatabaseReference databaseReference;
     private Button messageButton,ratingButton;
+    private ImageView doctorImage;
 
 
 
@@ -42,6 +45,7 @@ public class DoctorProfile extends AppCompatActivity {
         messageButton=findViewById(R.id.intrebare);
         ratingButton=findViewById(R.id.rating);
         recenzie=findViewById(R.id.recenzie);
+        doctorImage=findViewById(R.id.doctorImage);
 
         showRating(doctor_id);
         ratingButton.setOnClickListener(new View.OnClickListener() {
@@ -70,13 +74,19 @@ public class DoctorProfile extends AppCompatActivity {
                 String email=dataSnapshot.child("email").getValue().toString();
                 String phone=dataSnapshot.child("phone").getValue().toString();
                 String specializareD=dataSnapshot.child("specializare").getValue().toString();
+                String image=dataSnapshot.child("image").getValue().toString();
 
                 doctorName.setText("Dr. "+firstName+ " " +lastName);
                 doctorPhone.setText(phone);
                 doctorEmail.setText(email);
                 doctorAddress.setText(address);
                 specializare.setText(specializareD);
-
+                if(!image.equals("default")) {
+                    Picasso.with(DoctorProfile.this)
+                            .load(image)
+                            .resize(160, 160)
+                            .into(doctorImage);
+                }
             }
 
             @Override
@@ -132,8 +142,6 @@ public class DoctorProfile extends AppCompatActivity {
 
     public void showRating(final String doctor_id){
             DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("Ratings");
-
-
             databaseReference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

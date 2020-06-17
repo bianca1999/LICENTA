@@ -61,30 +61,6 @@ public class RegisterMedicActivity extends AppCompatActivity {
         specializariAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         titleSpinner.setAdapter(titleAdapter);
 
-        titleSpinner.setOnItemSelectedListener((new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String itemValue=parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        }));
-
-
-        specializariSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String itemValue=parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
         medicRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,10 +86,9 @@ public class RegisterMedicActivity extends AppCompatActivity {
                     progressDialog.show();
                     registerMedic(lastNameText, firstNameText, emailText, phoneText, addressText, specializareText,titleText, passwordText);
                 }
-                else{
+                else {
                     Toast.makeText(RegisterMedicActivity.this, "Va rugam sa completati toate campurile!",
                             Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
@@ -131,13 +106,14 @@ public class RegisterMedicActivity extends AppCompatActivity {
                             if(current_user != null) {
                                 String uid = current_user.getUid();
                                 referencefirebaseDatabase = FirebaseDatabase.getInstance().getReference();
-                                Doctor doctor = new Doctor(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText,titleText);
+                                Doctor doctor = new Doctor(firstNameText, lastNameText, emailText, addressText, phoneText, specializareText,titleText,"default");
                                 referencefirebaseDatabase.child("Doctors").child(uid).setValue(doctor);
                                 progressDialog.dismiss();
                                 sendToLoginPage();
                             }
-
-                        } else {
+                        }
+                        else
+                            {
                             progressDialog.hide();
                             Toast.makeText(RegisterMedicActivity.this, "Inregintrare fara succes!",
                                     Toast.LENGTH_SHORT).show();

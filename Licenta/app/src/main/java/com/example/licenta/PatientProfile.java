@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.R;
+import com.example.licenta.model.Patient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -16,13 +17,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class PatientProfile extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
-    ImageView userImage;
-    TextView userEmail, userAddress, userGender, userPhone, userBirthday, userName;
+    private ImageView userImage;
+    private TextView userEmail, userAddress, userGender, userPhone, userBirthday, userName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +48,6 @@ public class PatientProfile extends AppCompatActivity {
 
         }
 
-
-
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -57,13 +57,19 @@ public class PatientProfile extends AppCompatActivity {
                 String email=dataSnapshot.child("email").getValue().toString();
                 String phone=dataSnapshot.child("phone").getValue().toString();
                 String gender=dataSnapshot.child("gender").getValue().toString();
+                String image=dataSnapshot.child("image").getValue().toString();
 
                 userName.setText(firstName+" "+lastName);
                 userAddress.setText(address);
                 userEmail.setText(email);
                 userPhone.setText(phone);
                 userGender.setText(gender);
-
+                if(!image.equals("default")) {
+                    Picasso.with(PatientProfile.this)
+                            .load(image)
+                            .resize(160, 160)
+                            .into(userImage);
+                }
             }
 
             @Override

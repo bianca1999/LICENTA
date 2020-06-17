@@ -83,26 +83,18 @@ public class RegisterPatientActivity extends AppCompatActivity {
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
-                registerPatient(lastNameText, firstNameText, emailText, phoneText, addressText, genderText, passwordText);
+                registerPatient(lastNameText, firstNameText, emailText, phoneText, addressText, genderText, passwordText, "default");
             }
-            else{
-                Toast.makeText(RegisterPatientActivity.this, "Please fill all boxes.",
+            else {
+                Toast.makeText(RegisterPatientActivity.this, "Va rugam sa completati toate campurile!",
                         Toast.LENGTH_SHORT).show();
 
-            }
-                /*Intent intent=new Intent(getApplicationContext(),PatientProfile.class);
-                String userName=""+firstNameText+" "+lastNameText;
-                intent.putExtra("UserName",userName);
-                intent.putExtra("email",emailText);
-                intent.putExtra("phone",phoneText);
-                intent.putExtra("address",addressText);
-                intent.putExtra("gender",curentGender.getText().toString());
-                startActivity(intent);*/
+                 }
             }
         });
     }
 
-    private void registerPatient(final String lastNameText, final String firstNameText, final String emailText, final String phoneText, final String addressText, final String genderText,final String passwordText) {
+    private void registerPatient(final String lastNameText, final String firstNameText, final String emailText, final String phoneText, final String addressText, final String genderText,final String passwordText, final String imageText) {
         mAuth.createUserWithEmailAndPassword(emailText, passwordText)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -111,7 +103,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
                             FirebaseUser current_user=FirebaseAuth.getInstance().getCurrentUser();
                             String uid=current_user.getUid();
                             referencefirebaseDatabase=FirebaseDatabase.getInstance().getReference();
-                            Patient patientModel=new Patient(firstNameText,lastNameText,emailText,addressText,phoneText,genderText);
+                            Patient patientModel=new Patient(firstNameText,lastNameText,emailText,addressText,phoneText,genderText,imageText);
                             referencefirebaseDatabase.child("Patients").child(uid).setValue(patientModel);
                             progressDialog.dismiss();
                             sendToLoginPage();

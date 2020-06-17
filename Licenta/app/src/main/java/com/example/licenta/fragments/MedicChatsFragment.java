@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.R;
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 public class MedicChatsFragment extends Fragment {
     private RecyclerView chatList;
@@ -40,10 +42,9 @@ public class MedicChatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         mainView = inflater.inflate(R.layout.fragment_medic_chats, container, false);
         chatList = mainView.findViewById(R.id.reciclerView);
-
         firebaseAuth = FirebaseAuth.getInstance();
         current_user_id = firebaseAuth.getCurrentUser().getUid();
         chatList.setHasFixedSize(true);
@@ -82,7 +83,12 @@ public class MedicChatsFragment extends Fragment {
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String firstName = dataSnapshot.child("firstName").getValue().toString();
                                     String lastName = dataSnapshot.child("lastName").getValue().toString();
+                                    String image=dataSnapshot.child("image").getValue().toString();
                                     holder.pacientName.setText(firstName + " " + lastName);
+
+                                    Picasso.with(getContext())
+                                            .load(image)
+                                            .into(holder.pacientImage);
                                     lastMessage(sender, holder.lastMsg);
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -100,8 +106,6 @@ public class MedicChatsFragment extends Fragment {
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                 }
                             });
-
-
                     }
                     @NonNull
                     @Override
@@ -121,11 +125,13 @@ public class MedicChatsFragment extends Fragment {
         View view;
         TextView pacientName;
         TextView lastMsg;
+        ImageView pacientImage;
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
             pacientName=view.findViewById(R.id.doctorName);
+            pacientImage=view.findViewById(R.id.doctorImage);
             lastMsg=view.findViewById(R.id.specializare);
         }
     }

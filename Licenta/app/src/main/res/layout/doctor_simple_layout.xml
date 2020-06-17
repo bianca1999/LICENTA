@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/rowChat">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctorImage"
         android:layout_width="65dp"
         android:layout_height="60dp"
@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
-        app:srcCompat="@drawable/user_img" />
+        android:src="@drawable/user_img" />
 
     <TextView
         android:id="@+id/doctorName"

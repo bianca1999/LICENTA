@@ -30,6 +30,15 @@
             android:textSize="18dp"
             android:textColor="@color/white"
             android:background="@drawable/bck_message_right"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/showMsg"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/showImg"
+            />
     </RelativeLayout>
 
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoctorProfile">
+    tools:context=".SettingsMedicActivity">
+
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -19,63 +20,81 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_marginTop="14dp"
-                android:id="@+id/doctorImage"
-                android:layout_width="170dp"
-                android:layout_height="170dp"
-                android:src="@drawable/user_img" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userImg"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:layout_marginTop="14dp"
+                    android:src="@drawable/user_img" />
             </RelativeLayout>
 
             <TextView
-            android:id="@+id/doctorName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bianca"
-            android:textSize="32sp"
-            android:textStyle="normal|bold"
-            android:layout_below="@+id/userImage"
-            android:layout_centerHorizontal="true" android:textColor="@color/white"
-            android:paddingBottom="10dp"
-            android:fontFamily="sans-serif-light"/>
+                android:id="@+id/doctorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bianca"
+                android:textSize="32sp"
+                android:textStyle="normal|bold"
+                android:layout_below="@+id/userImage"
+                android:layout_centerHorizontal="true" android:textColor="@color/white"
+                android:fontFamily="sans-serif-light"/>
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medic primar"
+                android:textSize="18sp"
+                android:textStyle="normal|italic"
+                android:layout_below="@+id/doctorName"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
+                android:paddingBottom="10dp"
+                android:fontFamily="sans-serif-light"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginTop="15dp"
+                android:layout_above="@id/buttons"
+                android:background="@android:color/darker_gray" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/doctorName"
+                android:layout_below="@+id/title"
                 android:id="@+id/buttons">
 
                 <Button
-                    android:id="@+id/intrebare"
+                    android:id="@+id/changePhoto"
                     android:layout_width="212dp"
                     android:layout_height="match_parent"
                     android:background="@color/toolBarColor"
-                    android:drawableLeft="@android:drawable/stat_notify_chat"
-                    android:text="Contacteaza"
+                    android:text="Schimba fotografia"
                     android:textColor="@color/white"
                     android:textSize="18dp"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="30dp"/>
+                    />
 
                 <View
-                android:layout_width="1dp"
-                android:layout_height="58dp"
-                android:background="@color/tabBarColor" />
+                    android:layout_width="2dp"
+                    android:layout_height="58dp"
+                    android:background="@android:color/darker_gray" />
 
 
                 <Button
-                    android:id="@+id/rating"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="40dp"
+                    android:id="@+id/editProfile"
                     android:layout_width="212dp"
                     android:layout_height="match_parent"
                     android:background="@color/toolBarColor"
-                    android:drawableLeft="@android:drawable/btn_star_big_on"
-                    android:text="Recenzie"
+                    android:text="Editeaza profil"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@id/buttons"
+                android:background="@android:color/darker_gray" />
         </RelativeLayout>
     </RelativeLayout>
 
@@ -180,38 +199,6 @@
                     android:background="@android:color/darker_gray" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Specializare"
-                    android:textColor="@color/toolBarColor"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/specializare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Cardiologie"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@android:color/darker_gray" />
-
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

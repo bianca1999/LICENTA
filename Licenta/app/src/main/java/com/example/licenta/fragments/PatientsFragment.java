@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.DoctorProfile;
@@ -24,16 +25,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PatientsFragment extends Fragment {
 
     private RecyclerView patientList;
     private DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
-    String current_user_id;
+    private FirebaseAuth firebaseAuth;
+    private String current_user_id;
     private View mainView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +66,7 @@ public class PatientsFragment extends Fragment {
             protected void onBindViewHolder(@NonNull PatientsFragment.PatientViewHolder holder, int position, @NonNull Patient patient) {
                 holder.setName(patient.getFirstName(),patient.getLastName());
                 holder.setEmail(patient.getEmail());
+                holder.setImage(patient.getImage());
                 final String patient_id=getRef(position).getKey();
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -109,12 +109,20 @@ public class PatientsFragment extends Fragment {
             else
                 doctorFirstName.setText("Dl. "+firstName+ " " + lastName);
 
-
-
         }
         public void setEmail(String email){
             TextView doctorEmail=view.findViewById(R.id.specializare);
             doctorEmail.setText(email);
         }
+
+        public void setImage(String imageUri){
+            ImageView doctorImage=view.findViewById(R.id.doctorImage);
+            if(!imageUri.equals("default")){
+                Picasso.with(getContext())
+                        .load(imageUri)
+                        .into(doctorImage);
+            }
+        }
+
     }
 }

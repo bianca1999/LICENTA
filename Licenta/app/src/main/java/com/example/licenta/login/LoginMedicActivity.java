@@ -49,8 +49,8 @@ public class LoginMedicActivity extends AppCompatActivity {
                 String emailText = emailEditText.getText().toString();
                 String passwordText = passwordEditText.getText().toString();
                 if (!TextUtils.isEmpty(emailText) || !TextUtils.isEmpty(passwordText)) {
-                    progressDialog.setTitle("Loging In");
-                    progressDialog.setMessage("Please wait to login...!");
+                    progressDialog.setTitle("Logare Medic");
+                    progressDialog.setMessage("Va rugam sa asteptati cateva momente...!");
                     progressDialog.setCanceledOnTouchOutside(false);
                     progressDialog.show();
                     loginDoctor(emailText, passwordText);

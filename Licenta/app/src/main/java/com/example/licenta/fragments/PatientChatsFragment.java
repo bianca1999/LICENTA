@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class PatientChatsFragment extends Fragment {
@@ -84,6 +87,11 @@ public class PatientChatsFragment extends Fragment {
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                                 String lastName = dataSnapshot.child("lastName").getValue().toString();
+                                String image=dataSnapshot.child("image").getValue().toString();
+
+                                Picasso.with(getContext())
+                                        .load(image)
+                                        .into(holder.pacientImage);
                                 holder.doctorName.setText("Dr. " + firstName + " " + lastName);
                                 lastMessage(receiver, holder.lastMsg);
                                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -121,18 +129,20 @@ public class PatientChatsFragment extends Fragment {
         View view;
         TextView doctorName;
         TextView lastMsg;
+        ImageView pacientImage;
         RelativeLayout rowChat;
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
             view=itemView;
             doctorName=view.findViewById(R.id.doctorName);
+            pacientImage=view.findViewById(R.id.doctorImage);
             lastMsg=view.findViewById(R.id.specializare);
             rowChat=view.findViewById(R.id.rowChat);
         }
     }
 
-    private void lastMessage(final String userid, final TextView last_msg){
+    private void lastMessage(final String userId, final TextView last_msg){
         theLastMessage = "default";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -143,9 +153,9 @@ public class PatientChatsFragment extends Fragment {
                     Chat chat = snapshot.getValue(Chat.class);
                     if (firebaseUser != null && chat != null) {
                         if (chat.getReceiver().equals(firebaseUser.getUid())
-                                && chat.getSender().equals(userid) ||
-                                chat.getReceiver().equals(userid) &&
-                                        chat.getSender().equals(firebaseUser.getUid())) {
+                                && chat.getSender().equals(userId)
+                                || chat.getReceiver().equals(userId)
+                                && chat.getSender().equals(firebaseUser.getUid())) {
                             theLastMessage = chat.getMessage();
                         }
                     }

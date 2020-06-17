@@ -46,7 +46,7 @@ public class LoginPatientActivity extends AppCompatActivity {
         passwordEditText=findViewById(R.id.passwordEditText);
         toolbar=findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setTitle("Patient LOGIN");
+        getSupportActionBar().setTitle("");
 
         progressDialog=new ProgressDialog(this);
         loginButton.setOnClickListener(new View.OnClickListener() {

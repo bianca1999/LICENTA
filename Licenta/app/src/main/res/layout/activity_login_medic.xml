@@ -12,7 +12,6 @@
 
  <EditText
      android:id="@+id/emailEditText"
-     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
      android:layout_width="258dp"
      android:layout_height="46dp"
      android:drawableLeft="@android:drawable/sym_action_email"
@@ -22,9 +21,8 @@
      app:layout_constraintEnd_toEndOf="parent"
      app:layout_constraintHorizontal_bias="0.496"
      app:layout_constraintStart_toStartOf="parent"
-
      app:layout_constraintTop_toBottomOf="@+id/medicLogin"
-     app:layout_constraintVertical_bias="0.164" />
+     app:layout_constraintVertical_bias="0.144" />
 
  <TextView
      android:id="@+id/medicLogin"
@@ -42,7 +40,6 @@
 
  <EditText
      android:id="@+id/passwordEditText"
-     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
      android:layout_width="257dp"
      android:layout_height="51dp"
      android:drawableLeft="@android:drawable/ic_secure"
@@ -51,11 +48,11 @@
      android:inputType="textPassword"
      app:layout_constraintBottom_toBottomOf="parent"
      app:layout_constraintEnd_toEndOf="parent"
-     app:layout_constraintHorizontal_bias="0.519"
+     app:layout_constraintHorizontal_bias="0.493"
      app:layout_constraintStart_toStartOf="parent"
      app:layout_constraintTop_toBottomOf="@+id/emailEditText"
 
-     app:layout_constraintVertical_bias="0.045" />
+     app:layout_constraintVertical_bias="0.021" />
 
  <Button
      android:id="@+id/button"
@@ -70,7 +67,7 @@
      app:layout_constraintEnd_toEndOf="parent"
      app:layout_constraintStart_toStartOf="parent"
      app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
-     app:layout_constraintVertical_bias="0.154" />
+     app:layout_constraintVertical_bias="0.113" />
 
  <TextView
      android:id="@+id/registerTextView"

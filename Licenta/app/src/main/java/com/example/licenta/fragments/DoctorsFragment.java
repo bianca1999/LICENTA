@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.R;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +67,8 @@ public class DoctorsFragment extends Fragment {
             protected void onBindViewHolder(@NonNull DoctorsViewHolder holder, int position, @NonNull Doctor doctors) {
                 holder.setName(doctors.getFirstName(),doctors.getLastName());
                 holder.setSpecializare(doctors.getSpecializare());
+                holder.setImage(doctors.getImage());
+
                 final String doctor_id=getRef(position).getKey();
                 holder.view.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -108,6 +112,15 @@ public class DoctorsFragment extends Fragment {
         public void setSpecializare(String specializare){
             TextView doctorSpecializare=view.findViewById(R.id.specializare);
             doctorSpecializare.setText(specializare);
+        }
+
+        public void setImage(String imageUri){
+            ImageView doctorImage=view.findViewById(R.id.doctorImage);
+            if(!imageUri.equals("default")){
+                Picasso.with(getContext())
+                        .load(imageUri)
+                        .into(doctorImage);
+            }
         }
     }
 }

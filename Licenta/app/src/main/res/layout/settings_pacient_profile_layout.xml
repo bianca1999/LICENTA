@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/chatColor">
+
+
+    <TextView
+        android:id="@+id/editProfileTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="28dp"
+        android:gravity="center_horizontal"
+        android:text="Editeaza-ti datele de profil!"
+        android:textSize="25dp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editProfileTitle"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:id="@+id/numeLayout"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nume"
+            android:textColor="@color/toolBarColor"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/nume"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:fontFamily="sans-serif-light"
+            android:background="@color/white"
+            android:layout_marginLeft="34dp"
+            android:hint="Editeaza"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numeLayout"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:id="@+id/prenumeLayout"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Prenume"
+            android:textColor="@color/toolBarColor"
+            android:textSize="24sp" />
+        <EditText
+            android:id="@+id/prenume"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:drawableLeft="@drawable/ic_person_black_24dp"
+            android:background="@color/white"
+            android:layout_marginLeft="5dp"
+            android:hint="Editeaza"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/prenumeLayout"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:id="@+id/adresaLayout"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adresa"
+            android:textColor="@color/toolBarColor"
+            android:textSize="24sp" />
+        <EditText
+            android:id="@+id/adresa"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:background="@color/white"
+            android:layout_marginLeft="22dp"
+            android:drawableLeft="@drawable/ic_add_location_black_24dp"
+            android:hint="Editeaza"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adresaLayout"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/telefonLayout"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Telefon"
+            android:textColor="@color/toolBarColor"
+            android:textSize="24sp" />
+        <EditText
+            android:id="@+id/telefon"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:padding="10dp"
+            android:fontFamily="sans-serif-light"
+            android:drawableLeft="@drawable/ic_phone_black_24dp"
+            android:background="@color/white"
+            android:layout_marginLeft="18dp"
+            android:hint="Editeaza"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
