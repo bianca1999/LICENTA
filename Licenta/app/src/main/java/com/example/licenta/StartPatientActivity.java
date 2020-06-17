@@ -31,14 +31,11 @@ import com.squareup.picasso.Target;
 
 public class StartPatientActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private FirebaseAuth mAuth;
     private ViewPager viewPager;
     private PatientPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
-    private TextView nume, email;
-    private ImageView image;
-    private DatabaseReference databaseReference;
-    private FirebaseUser currentUser;
+    private TextView name, email;
+    private ImageView imagePatient;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -87,10 +84,9 @@ public class StartPatientActivity extends AppCompatActivity {
         });
 
         View viewHeaderView=navigationView.getHeaderView(0);
-        nume = viewHeaderView.findViewById(R.id.numePacient);
+        name = viewHeaderView.findViewById(R.id.numePacient);
         email = viewHeaderView.findViewById(R.id.emailPacient);
-        image=viewHeaderView.findViewById(R.id.image);
-        mAuth = FirebaseAuth.getInstance();
+        imagePatient=viewHeaderView.findViewById(R.id.image);
         viewPager = findViewById(R.id.viewPager);
 
         sectionsPagerAdapter = new PatientPagerAdapter(getSupportFragmentManager());
@@ -98,21 +94,23 @@ public class StartPatientActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_user_uid = currentUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(current_user_uid);
+        String current_patient_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(current_patient_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
                 String emailt = dataSnapshot.child("email").getValue().toString();
-                String imagine=dataSnapshot.child("image").getValue().toString();
+                String image=dataSnapshot.child("image").getValue().toString();
                 String username=firstName + " " + lastName;
 
-                nume.setText(username);
+                name.setText(username);
                 email.setText(emailt);
-                Picasso.with(getApplicationContext()).load(imagine).into(image);
+                if(!image.equals("default"))
+                Picasso.with(getApplicationContext())
+                        .load(image)
+                        .into(imagePatient);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -129,15 +127,6 @@ public class StartPatientActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            sendToWelcomePage();
-
-        }
-    }
 
     private void sendToWelcomePage() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);

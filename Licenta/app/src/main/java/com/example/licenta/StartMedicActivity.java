@@ -30,7 +30,7 @@ import com.squareup.picasso.Picasso;
 
 public class StartMedicActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private FirebaseAuth mAuth;
+
     private ViewPager viewPager;
     private MedicPagerAdapter medicPagerAdapter;
     private TabLayout tabLayout;
@@ -38,7 +38,6 @@ public class StartMedicActivity extends AppCompatActivity {
     private TextView nume, specializare;
     private ImageView imagine;
     private DatabaseReference databaseReference;
-    private FirebaseUser currentUser;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -52,11 +51,14 @@ public class StartMedicActivity extends AppCompatActivity {
         toolbar=findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Medic App");
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
         NavigationView navigationView=findViewById(R.id.navView);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -88,7 +90,6 @@ public class StartMedicActivity extends AppCompatActivity {
         imagine=viewHeaderView.findViewById(R.id.image);
 
 
-        mAuth = FirebaseAuth.getInstance();
         viewPager=findViewById(R.id.viewPager);
 
         medicPagerAdapter=new MedicPagerAdapter(getSupportFragmentManager());
@@ -96,10 +97,8 @@ public class StartMedicActivity extends AppCompatActivity {
         tabLayout=findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
 
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String current_user_uid = currentUser.getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(current_user_uid);
+        String current_doctor_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(current_doctor_uid);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -108,13 +107,15 @@ public class StartMedicActivity extends AppCompatActivity {
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
                 String specializaret = dataSnapshot.child("specializare").getValue().toString();
                 String titleText=dataSnapshot.child("title").getValue().toString();
-                Picasso.with(StartMedicActivity.this)
-                        .load(image)
-                        .resize(160,160)
-                        .into(imagine);
 
                 nume.setText("Dr. "+ firstName + " " + lastName);
                 specializare.setText(titleText+", " +specializaret);
+                if(!image.equals("default")){
+                    Picasso.with(StartMedicActivity.this)
+                            .load(image)
+                            .resize(160,160)
+                            .into(imagine);
+                }
             }
 
             @Override
@@ -138,26 +139,10 @@ public class StartMedicActivity extends AppCompatActivity {
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        switch (item.getItemId()) {
-            case R.id.patientLogout:
-                FirebaseAuth.getInstance().signOut();
-                sendToWelcomePage();
-                break;
-            default:
-                return true;
-        }
         return true;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser== null){
-            sendToWelcomePage();
 
-        }
-    }
     private void sendToWelcomePage() {
         Intent intent=new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);

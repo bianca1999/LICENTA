@@ -53,7 +53,6 @@ public class SettingsPacientActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private TextView userEmail, userAddress, userGender, userPhone, userBirthday, userName;
     private static final int GALLERY_PICK=1;
-    private FirebaseAuth firebaseAuth;
     private StorageReference storageReference;
 
     @Override
@@ -71,7 +70,6 @@ public class SettingsPacientActivity extends AppCompatActivity {
 
         changePhotoButton=findViewById(R.id.changePhoto);
         editProfileButton=findViewById(R.id.editProfile);
-        firebaseAuth=FirebaseAuth.getInstance();
         final String current_user_id= FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         editProfileButton.setOnClickListener(new View.OnClickListener() {
@@ -107,10 +105,14 @@ public class SettingsPacientActivity extends AppCompatActivity {
             userEmail.setText(email);
             userPhone.setText(phone);
             userGender.setText(gender);
-            Picasso.with(SettingsPacientActivity.this)
-                    .load(image)
-                    .resize(160,160)
-                    .into(userImage);
+            if(!image.equals("default")){
+                Picasso.with(SettingsPacientActivity.this)
+                        .load(image)
+                        .resize(160,160)
+                        .into(userImage);
+
+            }
+
         }
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {

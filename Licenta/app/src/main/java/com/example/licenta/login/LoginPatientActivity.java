@@ -24,7 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 
 public class LoginPatientActivity extends AppCompatActivity {
-    private TextView titleTextView, register1, register2;
     private Button loginButton;
     private EditText emailEditText, passwordEditText;
     private Toolbar toolbar;
@@ -37,10 +36,6 @@ public class LoginPatientActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_patient);
 
         mAuth = FirebaseAuth.getInstance();
-
-        titleTextView=findViewById(R.id.pacientLogin);
-        register1=findViewById(R.id.registerTextView);
-        register2=findViewById(R.id.registerTextView2);
         loginButton=findViewById(R.id.loginButton);
         emailEditText=findViewById(R.id.emailEditText);
         passwordEditText=findViewById(R.id.passwordEditText);
@@ -62,7 +57,7 @@ public class LoginPatientActivity extends AppCompatActivity {
                     loginPatient(emailText, passwordText);
                 }
                 else{
-                    Toast.makeText(LoginPatientActivity.this, "Please fill all boxes.",
+                    Toast.makeText(LoginPatientActivity.this, "Va rugam completati toate campurile!",
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -85,7 +80,7 @@ public class LoginPatientActivity extends AppCompatActivity {
 
                         } else {
                             progressDialog.hide();
-                            Toast.makeText(LoginPatientActivity.this, "Login failed.",
+                            Toast.makeText(LoginPatientActivity.this, "Logarea nu a reusit!",
                                     Toast.LENGTH_SHORT).show();
                         }
 

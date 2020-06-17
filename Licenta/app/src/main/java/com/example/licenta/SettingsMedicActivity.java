@@ -42,7 +42,7 @@ public class SettingsMedicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_medic);
 
-        final String current_user_id= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String current_medic_id= FirebaseAuth.getInstance().getCurrentUser().getUid();
         storageReference= FirebaseStorage.getInstance().getReference();
         userEmail=findViewById(R.id.email);
         userAddress=findViewById(R.id.address);
@@ -53,7 +53,20 @@ public class SettingsMedicActivity extends AppCompatActivity {
         changePhotoButton=findViewById(R.id.changePhoto);
         editProfileButton=findViewById(R.id.editProfile);
 
-        databaseReference= FirebaseDatabase.getInstance().getReference().child("Doctors").child(current_user_id);
+        editProfileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editProfile(current_medic_id);
+            }
+        });
+
+        changePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changePhoto();
+            }
+        });
+        databaseReference= FirebaseDatabase.getInstance().getReference().child("Doctors").child(current_medic_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -72,29 +85,19 @@ public class SettingsMedicActivity extends AppCompatActivity {
                 userEmail.setText(email);
                 userPhone.setText(phone);
                 userTitle.setText(title+", "+specializare);
-                Picasso.with(SettingsMedicActivity.this)
-                        .load(image)
-                        .resize(160,160)
-                        .into(userImage);
+                if(!image.equals("default")){
+                    Picasso.with(SettingsMedicActivity.this)
+                            .load(image)
+                            .resize(160,160)
+                            .into(userImage);
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-        editProfileButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editProfile(current_user_id);
-            }
-        });
 
-        changePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                changePhoto();
-            }
-        });
     }
 
     private void changePhoto() {
@@ -118,8 +121,8 @@ public class SettingsMedicActivity extends AppCompatActivity {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
                 Uri resultUri = result.getUri();
-                final String current_user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                final StorageReference filepath = storageReference.child("images").child(current_user_id + ".jpg");
+                final String current_medic_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                final StorageReference filepath = storageReference.child("images").child(current_medic_id + ".jpg");
 
                 filepath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override

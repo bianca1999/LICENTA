@@ -20,7 +20,6 @@ import com.example.licenta.login.LoginPatientActivity;
 import com.example.licenta.model.Patient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,8 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterPatientActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private DatabaseReference referencefirebaseDatabase;
-    private FirebaseAnalytics firebaseAnalytics;
     private EditText lastName, firstName, email, phone, address, password;
     private ProgressDialog progressDialog;
 
@@ -56,9 +53,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
         genderSpinner.setAdapter(adapter);
 
         mAuth = FirebaseAuth.getInstance();
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-        progressDialog=new ProgressDialog(this);
 
+        progressDialog=new ProgressDialog(this);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,7 +84,6 @@ public class RegisterPatientActivity extends AppCompatActivity {
             else {
                 Toast.makeText(RegisterPatientActivity.this, "Va rugam sa completati toate campurile!",
                         Toast.LENGTH_SHORT).show();
-
                  }
             }
         });
@@ -102,14 +97,14 @@ public class RegisterPatientActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             FirebaseUser current_user=FirebaseAuth.getInstance().getCurrentUser();
                             String uid=current_user.getUid();
-                            referencefirebaseDatabase=FirebaseDatabase.getInstance().getReference();
+                            DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
                             Patient patientModel=new Patient(firstNameText,lastNameText,emailText,addressText,phoneText,genderText,imageText);
-                            referencefirebaseDatabase.child("Patients").child(uid).setValue(patientModel);
+                            databaseReference.child("Patients").child(uid).setValue(patientModel);
                             progressDialog.dismiss();
                             sendToLoginPage();
                         } else {
                             progressDialog.hide();
-                            Toast.makeText(RegisterPatientActivity.this, "Authentication failed.",
+                            Toast.makeText(RegisterPatientActivity.this, "Inregistrare nereusita!",
                                     Toast.LENGTH_SHORT).show();
 
                         }

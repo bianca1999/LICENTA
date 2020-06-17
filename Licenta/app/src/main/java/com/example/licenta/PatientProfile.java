@@ -37,11 +37,11 @@ public class PatientProfile extends AppCompatActivity {
         userBirthday=findViewById(R.id.birthday);
         userName=findViewById(R.id.userName);
 
-        final String current_id=getIntent().getStringExtra("patient_id");
+        final String patient_id=getIntent().getStringExtra("patient_id");
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
         String current_user_uid=currentUser.getUid();
-        if(!current_id.isEmpty()){
-            databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(current_id);
+        if(!patient_id.isEmpty()){
+            databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(patient_id);
         }
         else{
             databaseReference= FirebaseDatabase.getInstance().getReference().child("Patients").child(current_user_uid);

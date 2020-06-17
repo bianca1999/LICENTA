@@ -31,10 +31,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MedicChatsFragment extends Fragment {
     private RecyclerView chatList;
     private DatabaseReference databaseReference;
-    private FirebaseAuth firebaseAuth;
     private String current_user_id;
     private View mainView;
     private String theLastMessage;
@@ -45,8 +47,7 @@ public class MedicChatsFragment extends Fragment {
 
         mainView = inflater.inflate(R.layout.fragment_medic_chats, container, false);
         chatList = mainView.findViewById(R.id.reciclerView);
-        firebaseAuth = FirebaseAuth.getInstance();
-        current_user_id = firebaseAuth.getCurrentUser().getUid();
+        current_user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         chatList.setHasFixedSize(true);
         chatList.setLayoutManager(new LinearLayoutManager(getContext()));
         return mainView;
@@ -57,6 +58,8 @@ public class MedicChatsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        List<String> patientList=new ArrayList<String>();
+
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Chats");
@@ -73,10 +76,11 @@ public class MedicChatsFragment extends Fragment {
                         final String receiver = chat.getReceiver();
                         if (sender.equals( current_user_id)) {
                             databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(receiver);
-                        } else {
+                        }
+                        else {
                             if (receiver.equals(current_user_id))
-                                databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(sender);}
-
+                                databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(sender);
+                        }
 
                             databaseReference.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -85,19 +89,18 @@ public class MedicChatsFragment extends Fragment {
                                     String lastName = dataSnapshot.child("lastName").getValue().toString();
                                     String image=dataSnapshot.child("image").getValue().toString();
                                     holder.pacientName.setText(firstName + " " + lastName);
-
-                                    Picasso.with(getContext())
-                                            .load(image)
-                                            .into(holder.pacientImage);
+                                    if(!image.equals("default")){
+                                        Picasso.with(getContext())
+                                                .load(image)
+                                                .into(holder.pacientImage);
+                                    }
                                     lastMessage(sender, holder.lastMsg);
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent = new Intent(getContext(), WindowChatPatientActivity.class);
                                             intent.putExtra("pacient_id", sender);
-
                                             startActivity(intent);
-
                                         }
                                     });
                                 }
@@ -115,17 +118,16 @@ public class MedicChatsFragment extends Fragment {
                         return new MedicChatsFragment.ChatsViewHolder(view);
                     }
                 };
-
         firebaseRecyclerAdapter.startListening();
         chatList.setAdapter(firebaseRecyclerAdapter);
 
     }
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder{
-        View view;
-        TextView pacientName;
-        TextView lastMsg;
-        ImageView pacientImage;
+        private View view;
+        private TextView pacientName;
+        private TextView lastMsg;
+        private ImageView pacientImage;
 
         public ChatsViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -136,7 +138,7 @@ public class MedicChatsFragment extends Fragment {
         }
     }
 
-    private void lastMessage(final String userid, final TextView last_msg){
+    private void lastMessage(final String patientId, final TextView last_msg){
         theLastMessage = "default";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -147,8 +149,8 @@ public class MedicChatsFragment extends Fragment {
                     Chat chat = snapshot.getValue(Chat.class);
                     if (firebaseUser != null && chat != null) {
                         if (chat.getReceiver().equals(firebaseUser.getUid())
-                                && chat.getSender().equals(userid) ||
-                                chat.getReceiver().equals(userid) &&
+                                && chat.getSender().equals(patientId) ||
+                                chat.getReceiver().equals(patientId) &&
                                         chat.getSender().equals(firebaseUser.getUid())) {
                             theLastMessage = chat.getMessage();
                         }

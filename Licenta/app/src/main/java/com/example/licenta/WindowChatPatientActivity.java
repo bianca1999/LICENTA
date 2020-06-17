@@ -19,7 +19,6 @@ import com.example.licenta.Adapter.MessageAdapter;
 import com.example.licenta.model.Chat;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,7 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -39,7 +37,6 @@ import java.util.List;
 public class WindowChatPatientActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private FirebaseUser currentUser;
     private TextView displayName;
     private ImageButton sendButton;
     private ImageButton addButton;
@@ -58,6 +55,8 @@ public class WindowChatPatientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_chat_patient);
 
+        final String current_medic_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String patient_id = getIntent().getStringExtra("pacient_id");
         patientImage = findViewById(R.id.userImage);
         displayName = findViewById(R.id.displayName);
         sendButton = findViewById(R.id.sendBtn);
@@ -71,10 +70,6 @@ public class WindowChatPatientActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         messageList.setLayoutManager(linearLayoutManager);
-
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String current_medic_id = currentUser.getUid();
-        final String patient_id = getIntent().getStringExtra("pacient_id");
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,9 +101,12 @@ public class WindowChatPatientActivity extends AppCompatActivity {
                 String image = dataSnapshot.child("image").getValue().toString();
 
                 displayName.setText("Dr. " + firstName + " " + lastName);
-                Picasso.with(WindowChatPatientActivity.this)
-                        .load(image)
-                        .into(patientImage);
+                if(!image.equals("default")){
+                    Picasso.with(WindowChatPatientActivity.this)
+                            .load(image)
+                            .into(patientImage);
+                }
+
                 readMessage(patient_id, current_medic_id);
             }
 
@@ -130,7 +128,7 @@ public class WindowChatPatientActivity extends AppCompatActivity {
         databaseReference.child("Chats").push().setValue(chatObject);
     }
 
-    public void readMessage(final String currend_user_id, final String user_id) {
+    public void readMessage(final String current_medic_id, final String patient_id) {
         chatList = new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -139,10 +137,10 @@ public class WindowChatPatientActivity extends AppCompatActivity {
                 chatList.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
                     Chat chat = dataSnapshot1.getValue(Chat.class);
-                    if (chat.getReceiver().equals(user_id)
-                            && chat.getSender().equals(currend_user_id) ||
-                            chat.getReceiver().equals(currend_user_id)
-                                    && chat.getSender().equals(user_id)) {
+                    if (chat.getReceiver().equals(patient_id)
+                            && chat.getSender().equals(current_medic_id) ||
+                            chat.getReceiver().equals(current_medic_id)
+                                    && chat.getSender().equals(patient_id)) {
                         chatList.add(chat);
                     }
                     messageAdapter = new MessageAdapter(WindowChatPatientActivity.this, chatList);

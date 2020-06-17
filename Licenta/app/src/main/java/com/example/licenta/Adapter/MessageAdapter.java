@@ -23,14 +23,15 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
 
-    public static final int MSG_TYPE_LEFT=0;
-    public static final int MSG_TYPE_RIGHT=1;
+    private static final int MSG_TYPE_LEFT=0;
+    private static final int MSG_TYPE_RIGHT=1;
     private Context context;
     private List<Chat> chats;
-    FirebaseUser firebaseUser;
+
 
     public MessageAdapter(Context context, List<Chat> chats) {
         this.context = context;
@@ -51,6 +52,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull final MessageAdapter.ViewHolder holder, int position) {
         Chat chat = chats.get(position);
+        FirebaseUser firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
         if (chat.getMessage().startsWith("http")) {
             Picasso.with(context)
                     .load(chat.getMessage())
@@ -59,23 +61,50 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         } else {
             holder.showMessage.setText(chat.getMessage());
             holder.showImage.setVisibility(View.GONE);
-            String sender= chat.getSender();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(sender);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                     //String image=dataSnapshot.child("image").getValue().toString();
-                     //Picasso.with(context)
-                     //.load(image)
-                     //.into(holder.profileImage);
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            String receiver = chat.getReceiver();
+            if (receiver.equals(firebaseUser.getUid())) {
+                final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(chat.getSender());
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String image = dataSnapshot.child("image").getValue().toString();
+                            if (!image.equals("default")) {
+                                Picasso.with(context)
+                                        .load(image)
+                                        .into(holder.profileImage);
+                            }
+                        }
+                    }
 
-                }
-            });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                final DatabaseReference databaseReference2 = FirebaseDatabase.getInstance().getReference().child("Patients").child(chat.getSender());
+                databaseReference2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            String image = dataSnapshot.child("image").getValue().toString();
+                            if (!image.equals("default")) {
+                                Picasso.with(context)
+                                        .load(image)
+                                        .into(holder.profileImage);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
         }
+
     }
     @Override
     public int getItemCount() {
@@ -84,10 +113,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView showMessage;
-        public ImageView profileImage;
-        public ImageView showImage;
-        public ViewHolder(@NonNull View itemView) {
+        private TextView showMessage;
+        private ImageView profileImage;
+        private ImageView showImage;
+        private ViewHolder(@NonNull View itemView) {
             super(itemView);
             showMessage=itemView.findViewById(R.id.showMsg);
             profileImage=itemView.findViewById(R.id.profieImage);
@@ -97,8 +126,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     @Override
     public int getItemViewType(int position) {
-        firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-        if(chats.get(position).getSender().equals(firebaseUser.getUid())){
+        if(chats.get(position).getSender().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
             return MSG_TYPE_RIGHT;
         }
         else {

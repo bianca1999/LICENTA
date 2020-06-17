@@ -78,8 +78,6 @@ public class PatientsFragment extends Fragment {
                 });
             }
 
-
-
             @NonNull
             @Override
             public PatientsFragment.PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

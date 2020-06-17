@@ -55,6 +55,8 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_window_chat_doctor);
 
+        final String current_patient_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String doctor_id = getIntent().getStringExtra("doctor_id");
 
         displayName = findViewById(R.id.displayName);
         specializare = findViewById(R.id.specializare);
@@ -65,22 +67,17 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
         messageList.setHasFixedSize(true);
         addButton = findViewById(R.id.addBtn);
         storageReference = FirebaseStorage.getInstance().getReference();
-
-
-
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
+
         messageList.setLayoutManager(linearLayoutManager);
 
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String current_user_id = currentUser.getUid();
-        final String doctor_id = getIntent().getStringExtra("doctor_id");
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String mesaj = textSend.getText().toString();
                 if (!mesaj.equals("")) {
-                    sendMessage(doctor_id,current_user_id,mesaj);
+                    sendMessage(doctor_id,current_patient_id,mesaj);
 
                 }
                 textSend.setText("");
@@ -102,7 +99,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
-                String specializareT = dataSnapshot.child("specializare").getValue().toString();
+                String specializareText = dataSnapshot.child("specializare").getValue().toString();
                 String title=dataSnapshot.child("title").getValue().toString();
                 String image=dataSnapshot.child("image").getValue().toString();
 
@@ -110,8 +107,8 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                         .load(image)
                         .into(doctorImage);
                 displayName.setText("Dr. " + firstName + " " + lastName);
-                specializare.setText(title+" "+specializareT);
-                readMessage(current_user_id,doctor_id);
+                specializare.setText(title+" "+specializareText);
+                readMessage(current_patient_id,doctor_id);
             }
 
             @Override
@@ -135,7 +132,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
 
     }
 
-    public void readMessage(final String currend_user_id, final String user_id){
+    public void readMessage(final String current_patient_id, final String doctor_id){
         chatList=new ArrayList<>();
         databaseReference=FirebaseDatabase.getInstance().getReference("Chats");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -144,10 +141,10 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                 chatList.clear();
                 for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     Chat chat=dataSnapshot1.getValue(Chat.class);
-                    if(chat.getReceiver().equals(user_id)
-                        && chat.getSender().equals(currend_user_id)||
-                            chat.getReceiver().equals(currend_user_id)
-                                    && chat.getSender().equals(user_id)){
+                    if(chat.getReceiver().equals(doctor_id)
+                        && chat.getSender().equals(current_patient_id)||
+                            chat.getReceiver().equals(current_patient_id)
+                                    && chat.getSender().equals(doctor_id)){
                         chatList.add(chat);
                     }
                     messageAdapter=new MessageAdapter(WindowChatDoctorActivity.this,chatList);

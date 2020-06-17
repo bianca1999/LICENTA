@@ -22,20 +22,15 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginMedicActivity extends AppCompatActivity {
-    private TextView titleTextView, register1, register2;
     private Button loginButton;
     private EditText emailEditText, passwordEditText;
     private FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_medic);
-        titleTextView = findViewById(R.id.medicLogin);
-        register1 = findViewById(R.id.registerTextView);
-        register2 = findViewById(R.id.registerTextView2);
         loginButton = findViewById(R.id.button);
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -55,7 +50,7 @@ public class LoginMedicActivity extends AppCompatActivity {
                     progressDialog.show();
                     loginDoctor(emailText, passwordText);
                 } else {
-                    Toast.makeText(LoginMedicActivity.this, "Please fill all boxes.",
+                    Toast.makeText(LoginMedicActivity.this, "Va rugam completati toate campurile!",
                             Toast.LENGTH_SHORT).show();
                 }
 
@@ -75,10 +70,9 @@ public class LoginMedicActivity extends AppCompatActivity {
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
-
                         } else {
                             progressDialog.hide();
-                            Toast.makeText(LoginMedicActivity.this, "Login failed.",
+                            Toast.makeText(LoginMedicActivity.this, "Logarea nu a reusit!",
                                     Toast.LENGTH_SHORT).show();
                         }
 

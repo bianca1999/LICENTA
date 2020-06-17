@@ -25,14 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class DoctorsFragment extends Fragment {
     private RecyclerView doctorList;
     private DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
-    String current_user_id;
+    private FirebaseAuth firebaseAuth;
+    private String current_user_id;
     private View mainView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
