@@ -19,6 +19,7 @@ import com.example.licenta.R;
 import com.example.licenta.WindowChatDoctorActivity;
 import com.example.licenta.WindowChatPatientActivity;
 import com.example.licenta.model.Chat;
+import com.example.licenta.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +38,7 @@ import java.util.List;
 public class MedicChatsFragment extends Fragment {
     private RecyclerView chatList;
     private DatabaseReference databaseReference;
-    private String current_user_id;
+    private String current_medic_id;
     private View mainView;
     private String theLastMessage;
 
@@ -47,7 +48,7 @@ public class MedicChatsFragment extends Fragment {
 
         mainView = inflater.inflate(R.layout.fragment_medic_chats, container, false);
         chatList = mainView.findViewById(R.id.reciclerView);
-        current_user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        current_medic_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         chatList.setHasFixedSize(true);
         chatList.setLayoutManager(new LinearLayoutManager(getContext()));
         return mainView;
@@ -58,31 +59,23 @@ public class MedicChatsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        List<String> patientList=new ArrayList<String>();
 
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("Chats");
+                .child("UserMessages").child(current_medic_id);
 
-        FirebaseRecyclerOptions<Chat> options =
-                new FirebaseRecyclerOptions.Builder<Chat>()
-                        .setQuery(query, Chat.class)
+        FirebaseRecyclerOptions<User> options =
+                new FirebaseRecyclerOptions.Builder<User>()
+                        .setQuery(query, User.class)
                         .build();
-        FirebaseRecyclerAdapter<Chat, MedicChatsFragment.ChatsViewHolder> firebaseRecyclerAdapter=
-                new FirebaseRecyclerAdapter<Chat, MedicChatsFragment.ChatsViewHolder>(options) {
+        FirebaseRecyclerAdapter<User, MedicChatsFragment.ChatsViewHolder> firebaseRecyclerAdapter=
+                new FirebaseRecyclerAdapter<User, MedicChatsFragment.ChatsViewHolder>(options) {
                     @Override
-                    protected void onBindViewHolder(@NonNull final MedicChatsFragment.ChatsViewHolder holder, int position, @NonNull Chat chat) {
-                        final String sender = chat.getSender();
-                        final String receiver = chat.getReceiver();
-                        if (sender.equals( current_user_id)) {
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(receiver);
-                        }
-                        else {
-                            if (receiver.equals(current_user_id))
-                                databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(sender);
-                        }
+                    protected void onBindViewHolder(@NonNull final MedicChatsFragment.ChatsViewHolder holder, int position, @NonNull User user) {
+                        final String userId = user.getId();
 
-                            databaseReference.addValueEventListener(new ValueEventListener() {
+                         databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(userId);
+                         databaseReference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String firstName = dataSnapshot.child("firstName").getValue().toString();
@@ -94,12 +87,12 @@ public class MedicChatsFragment extends Fragment {
                                                 .load(image)
                                                 .into(holder.pacientImage);
                                     }
-                                    lastMessage(sender, holder.lastMsg);
+                                    lastMessage(userId, holder.lastMsg);
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             Intent intent = new Intent(getContext(), WindowChatPatientActivity.class);
-                                            intent.putExtra("pacient_id", sender);
+                                            intent.putExtra("pacient_id", userId);
                                             startActivity(intent);
                                         }
                                     });
@@ -120,7 +113,6 @@ public class MedicChatsFragment extends Fragment {
                 };
         firebaseRecyclerAdapter.startListening();
         chatList.setAdapter(firebaseRecyclerAdapter);
-
     }
 
     public static class ChatsViewHolder extends RecyclerView.ViewHolder{

@@ -79,6 +79,15 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                 if (!mesaj.equals("")) {
                     sendMessage(doctor_id,current_patient_id,mesaj);
 
+                    HashMap<String,String> chatObject1=new HashMap<>();
+                    chatObject1.put("id",doctor_id);
+                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child("UserMessages").child(current_patient_id).push().setValue(chatObject1);
+
+                    HashMap<String,String> chatObject2=new HashMap<>();
+                    chatObject2.put("id",current_patient_id);
+                    databaseReference.child("UserMessages").child(doctor_id).push().setValue(chatObject2);
+
                 }
                 textSend.setText("");
             }

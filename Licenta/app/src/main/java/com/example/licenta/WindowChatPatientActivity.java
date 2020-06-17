@@ -77,6 +77,15 @@ public class WindowChatPatientActivity extends AppCompatActivity {
                 String mesaj = textSend.getText().toString();
                 if (!mesaj.equals("")) {
                     sendMessage(patient_id, current_medic_id, mesaj);
+
+                    HashMap<String,String> chatObject1=new HashMap<>();
+                    chatObject1.put("id",patient_id);
+                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child("UserMessages").child(current_medic_id).push().setValue(chatObject1);
+
+                    HashMap<String,String> chatObject2=new HashMap<>();
+                    chatObject2.put("id",current_medic_id);
+                    databaseReference.child("UserMessages").child(patient_id).push().setValue(chatObject2);
                 }
                 textSend.setText("");
             }
@@ -126,6 +135,7 @@ public class WindowChatPatientActivity extends AppCompatActivity {
         chatObject.put("receiver", receiver);
         chatObject.put("message", message);
         databaseReference.child("Chats").push().setValue(chatObject);
+
     }
 
     public void readMessage(final String current_medic_id, final String patient_id) {
