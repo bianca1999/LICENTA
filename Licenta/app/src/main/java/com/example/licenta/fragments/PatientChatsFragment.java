@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.licenta.R;
 import com.example.licenta.WindowChatDoctorActivity;
 import com.example.licenta.model.Chat;
+import com.example.licenta.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +39,7 @@ public class PatientChatsFragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private String current_user_id;
     private View mainView;
-    private String theLastMessage;
+    private String theLastMessage, time;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +50,7 @@ public class PatientChatsFragment extends Fragment {
         firebaseAuth=FirebaseAuth.getInstance();
 
         current_user_id=firebaseAuth.getCurrentUser().getUid();
-        databaseReference=FirebaseDatabase.getInstance().getReference().child("Chats");
+
 
         chatList.setHasFixedSize(true);
         chatList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -60,56 +61,60 @@ public class PatientChatsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        final ArrayList<String> doctorList=new ArrayList<>();
+        final ArrayList<String> doctors=new ArrayList<>();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("Chats").orderByChild("receiver");
+                .child("UserMessages")
+                .child(current_user_id);
 
-        FirebaseRecyclerOptions<Chat> options =
-                new FirebaseRecyclerOptions.Builder<Chat>()
-                        .setQuery(query, Chat.class)
+        FirebaseRecyclerOptions<User> options =
+                new FirebaseRecyclerOptions.Builder<User>()
+                        .setQuery(query, User.class)
                         .build();
-        FirebaseRecyclerAdapter<Chat, PatientChatsFragment.ChatsViewHolder> firebaseRecyclerAdapter=
-                new FirebaseRecyclerAdapter<Chat, PatientChatsFragment.ChatsViewHolder>(options) {
+        FirebaseRecyclerAdapter<User, PatientChatsFragment.ChatsViewHolder> firebaseRecyclerAdapter=
+                new FirebaseRecyclerAdapter<User, PatientChatsFragment.ChatsViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull final PatientChatsFragment.ChatsViewHolder holder, int position, @NonNull Chat chat) {
-                final String receiver = chat.getReceiver();
-                final String sender = chat.getSender();
-                        if (sender.equals(current_user_id)) {
-                            databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(receiver);
-                        }
-                        else {
-                            if (receiver.equals(current_user_id))
-                                databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(sender);
-                        }
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                String firstName = dataSnapshot.child("firstName").getValue().toString();
-                                String lastName = dataSnapshot.child("lastName").getValue().toString();
-                                String image=dataSnapshot.child("image").getValue().toString();
+            protected void onBindViewHolder(@NonNull final PatientChatsFragment.ChatsViewHolder holder, int position, @NonNull User user) {
+                final String userId = user.getId();
+                if (!doctors.contains(userId))
 
+                {    doctors.add(userId);
+                    databaseReference=FirebaseDatabase.getInstance().getReference().child("Doctors").child(userId);
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String firstName = dataSnapshot.child("firstName").getValue().toString();
+                            String lastName = dataSnapshot.child("lastName").getValue().toString();
+                            String image = dataSnapshot.child("image").getValue().toString();
+                            if(!image.equals("default")){
                                 Picasso.with(getContext())
                                         .load(image)
                                         .into(holder.pacientImage);
-                                holder.doctorName.setText("Dr. " + firstName + " " + lastName);
-                                lastMessage(receiver, holder.lastMsg);
-                                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getContext(), WindowChatDoctorActivity.class);
-                                        intent.putExtra("doctor_id", receiver);
-
-                                        startActivity(intent);
-                                    }
-                                });
                             }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-                            }
-                        });
 
-                    }
+                            holder.doctorName.setText("Dr. " + firstName + " " + lastName);
+                            lastMessage(userId, holder.lastMsg,holder.lastTime);
+                            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(getContext(), WindowChatDoctorActivity.class);
+                                    intent.putExtra("doctor_id", userId);
+
+                                    startActivity(intent);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                        }
+                    });
+
+                }else {
+                    holder.view.setVisibility(View.GONE);
+                    holder.view.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
+                }
+            }
 
             @NonNull
             @Override
@@ -128,7 +133,7 @@ public class PatientChatsFragment extends Fragment {
     public static class ChatsViewHolder extends RecyclerView.ViewHolder{
         View view;
         TextView doctorName;
-        TextView lastMsg;
+        TextView lastMsg,lastTime;
         ImageView pacientImage;
         RelativeLayout rowChat;
 
@@ -138,12 +143,14 @@ public class PatientChatsFragment extends Fragment {
             doctorName=view.findViewById(R.id.doctorName);
             pacientImage=view.findViewById(R.id.doctorImage);
             lastMsg=view.findViewById(R.id.specializare);
+            lastTime=view.findViewById(R.id.time);
             rowChat=view.findViewById(R.id.rowChat);
         }
     }
 
-    private void lastMessage(final String userId, final TextView last_msg){
+    private void lastMessage(final String userId, final TextView last_msg,final TextView last_time){
         theLastMessage = "default";
+        time="";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -157,11 +164,13 @@ public class PatientChatsFragment extends Fragment {
                                 || chat.getReceiver().equals(userId)
                                 && chat.getSender().equals(firebaseUser.getUid())) {
                             theLastMessage = chat.getMessage();
+                            time=chat.getTime();
                         }
                     }
                 }
 
                 last_msg.setText(theLastMessage);
+                last_time.setText(time);
 
             }
 

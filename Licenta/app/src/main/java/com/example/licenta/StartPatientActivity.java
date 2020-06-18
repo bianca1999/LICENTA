@@ -20,14 +20,12 @@ import com.example.licenta.Adapter.PatientPagerAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 public class StartPatientActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -123,7 +121,7 @@ public class StartPatientActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.navigation_drawer_menu, menu);
+        getMenuInflater().inflate(R.menu.patient_menu, menu);
         return true;
     }
 

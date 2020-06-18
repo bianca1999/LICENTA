@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.licenta.R;
@@ -40,7 +41,7 @@ public class MedicChatsFragment extends Fragment {
     private DatabaseReference databaseReference;
     private String current_medic_id;
     private View mainView;
-    private String theLastMessage;
+    private String theLastMessage,time;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,10 +60,12 @@ public class MedicChatsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        final List<String> patients=new ArrayList<>();
 
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("UserMessages").child(current_medic_id);
+                .child("UserMessages")
+                .child(current_medic_id);
 
         FirebaseRecyclerOptions<User> options =
                 new FirebaseRecyclerOptions.Builder<User>()
@@ -72,10 +75,12 @@ public class MedicChatsFragment extends Fragment {
                 new FirebaseRecyclerAdapter<User, MedicChatsFragment.ChatsViewHolder>(options) {
                     @Override
                     protected void onBindViewHolder(@NonNull final MedicChatsFragment.ChatsViewHolder holder, int position, @NonNull User user) {
-                        final String userId = user.getId();
 
-                         databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(userId);
-                         databaseReference.addValueEventListener(new ValueEventListener() {
+                        final String userId = user.getId();
+                        if(!patients.contains(userId)){
+                            patients.add(userId);
+                            databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(userId);
+                            databaseReference.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     String firstName = dataSnapshot.child("firstName").getValue().toString();
@@ -87,7 +92,7 @@ public class MedicChatsFragment extends Fragment {
                                                 .load(image)
                                                 .into(holder.pacientImage);
                                     }
-                                    lastMessage(userId, holder.lastMsg);
+                                    lastMessage(userId, holder.lastMsg,holder.lastTime);
                                     holder.itemView.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -102,6 +107,12 @@ public class MedicChatsFragment extends Fragment {
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
                                 }
                             });
+                        }
+                        else {
+                            holder.view.setVisibility(View.GONE);
+                            holder.view.setLayoutParams(new RelativeLayout.LayoutParams(0,0));
+                        }
+
                     }
                     @NonNull
                     @Override
@@ -118,7 +129,7 @@ public class MedicChatsFragment extends Fragment {
     public static class ChatsViewHolder extends RecyclerView.ViewHolder{
         private View view;
         private TextView pacientName;
-        private TextView lastMsg;
+        private TextView lastMsg,lastTime;
         private ImageView pacientImage;
 
         public ChatsViewHolder(@NonNull View itemView) {
@@ -127,11 +138,13 @@ public class MedicChatsFragment extends Fragment {
             pacientName=view.findViewById(R.id.doctorName);
             pacientImage=view.findViewById(R.id.doctorImage);
             lastMsg=view.findViewById(R.id.specializare);
+            lastTime=view.findViewById(R.id.time);
         }
     }
 
-    private void lastMessage(final String patientId, final TextView last_msg){
+    private void lastMessage(final String patientId, final TextView last_msg,final TextView last_time){
         theLastMessage = "default";
+        time="";
         final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -145,11 +158,13 @@ public class MedicChatsFragment extends Fragment {
                                 chat.getReceiver().equals(patientId) &&
                                         chat.getSender().equals(firebaseUser.getUid())) {
                             theLastMessage = chat.getMessage();
+                            time=chat.getTime();
                         }
                     }
                 }
 
                 last_msg.setText(theLastMessage);
+                last_time.setText(time);
 
             }
 

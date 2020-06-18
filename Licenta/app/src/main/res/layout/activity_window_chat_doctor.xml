@@ -54,13 +54,14 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
+
+                <ImageButton
                     android:id="@+id/call"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="40dp"
-                    app:srcCompat="@android:drawable/ic_menu_call"
-                    android:layout_marginRight="-110dp"/>
+                    android:layout_height="50dp"
+                    android:background="@color/tabBarColor"
+                    android:layout_marginRight="-90dp"
+                    app:srcCompat="@android:drawable/ic_menu_call" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

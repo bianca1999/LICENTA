@@ -31,7 +31,9 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private TextView displayName, specializare;
 
-    private ImageButton buttonSend, addButton;
+    private ImageButton buttonSend, addButton, callButon;
     private EditText textSend;
     private RecyclerView messageList;
     private MessageAdapter messageAdapter;
@@ -66,18 +68,32 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
         messageList = findViewById(R.id.messageRecView);
         messageList.setHasFixedSize(true);
         addButton = findViewById(R.id.addBtn);
+        callButon=findViewById(R.id.call);
+
         storageReference = FirebaseStorage.getInstance().getReference();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
 
         messageList.setLayoutManager(linearLayoutManager);
 
+        callButon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WindowChatDoctorActivity.this, CallVideoActivity.class);
+                intent.putExtra("doctor_id",doctor_id);
+                startActivity(intent);
+            }
+        });
+
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String mesaj = textSend.getText().toString();
+                Calendar c=Calendar.getInstance();
+                SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+                String datetime = dateformat.format(c.getTime());
                 if (!mesaj.equals("")) {
-                    sendMessage(doctor_id,current_patient_id,mesaj);
+                    sendMessage(doctor_id,current_patient_id,mesaj,datetime);
 
                     HashMap<String,String> chatObject1=new HashMap<>();
                     chatObject1.put("id",doctor_id);
@@ -111,10 +127,12 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                 String specializareText = dataSnapshot.child("specializare").getValue().toString();
                 String title=dataSnapshot.child("title").getValue().toString();
                 String image=dataSnapshot.child("image").getValue().toString();
+                if(!image.equals("default")){
+                    Picasso.with(WindowChatDoctorActivity.this)
+                            .load(image)
+                            .into(doctorImage);
+                }
 
-                Picasso.with(WindowChatDoctorActivity.this)
-                        .load(image)
-                        .into(doctorImage);
                 displayName.setText("Dr. " + firstName + " " + lastName);
                 specializare.setText(title+" "+specializareText);
                 readMessage(current_patient_id,doctor_id);
@@ -128,13 +146,15 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
 
     }
 
-    public void sendMessage(String receiver,String sender, String message){
+    public void sendMessage(String receiver,String sender, String message, String time){
 
         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
         HashMap<String,String> chatObject=new HashMap<>();
         chatObject.put("sender",sender);
         chatObject.put("receiver",receiver);
         chatObject.put("message",message);
+        chatObject.put("time",time);
+
 
         databaseReference.child("Chats").push().setValue(chatObject);
 
@@ -182,7 +202,9 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                 Uri resultUri = result.getUri();
                 final String current_user_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 final StorageReference filepath = storageReference.child("message_files").child(current_user_id + ".jpg");
-
+                Calendar c=Calendar.getInstance();
+                SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
+                final String datetime = dateformat.format(c.getTime());
                 filepath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -191,7 +213,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                             public void onSuccess(Uri uri) {
                                 final String doctor_id = getIntent().getStringExtra("doctor_id");
                                 final String downloadUrl = uri.toString();
-                                sendMessage(doctor_id,current_user_id,downloadUrl);
+                                sendMessage(doctor_id,current_user_id,downloadUrl,datetime);
                             }
                         });
                     }
