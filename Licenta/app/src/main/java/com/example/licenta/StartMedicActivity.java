@@ -4,16 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.licenta.Adapter.MedicPagerAdapter;
@@ -34,10 +37,14 @@ public class StartMedicActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private MedicPagerAdapter medicPagerAdapter;
     private TabLayout tabLayout;
-
     private TextView nume, specializare;
     private ImageView imagine;
     private DatabaseReference databaseReference;
+    private int[] tabIcons={
+            R.drawable.ic_chat_black_24dp,
+            R.drawable.ic_person_white_24dp,
+            R.drawable.ic_perm_contact_calendar_white_24dp
+    };
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -96,6 +103,7 @@ public class StartMedicActivity extends AppCompatActivity {
         viewPager.setAdapter(medicPagerAdapter);
         tabLayout=findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
 
         String current_doctor_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(current_doctor_uid);
@@ -141,7 +149,17 @@ public class StartMedicActivity extends AppCompatActivity {
         }
         return true;
     }
-
+    private void setupTabIcons(){
+        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        int tabIconColor = ContextCompat.getColor(this, R.color.chatColor);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+        LinearLayout layout=(LinearLayout)((LinearLayout)tabLayout.getChildAt(0)).getChildAt(1);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) layout.getLayoutParams();
+        layoutParams.weight = 0.6f;
+        layout.setLayoutParams(layoutParams);
+    }
 
     private void sendToWelcomePage() {
         Intent intent=new Intent(getApplicationContext(), MainActivity.class);

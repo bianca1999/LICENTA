@@ -24,7 +24,7 @@
                 android:id="@+id/doctorImage"
                 android:layout_width="170dp"
                 android:layout_height="170dp"
-                android:src="@drawable/user_img" />
+                android:src="@drawable/user_img"/>
             </RelativeLayout>
 
             <TextView
@@ -35,27 +35,28 @@
             android:textSize="32sp"
             android:textStyle="normal|bold"
             android:layout_below="@+id/userImage"
-            android:layout_centerHorizontal="true" android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+                android:textColor="@color/white"
             android:paddingBottom="10dp"
             android:fontFamily="sans-serif-light"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="450dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/doctorName"
                 android:id="@+id/buttons">
 
                 <Button
                     android:id="@+id/intrebare"
-                    android:layout_width="212dp"
+                    android:layout_width="120dp"
                     android:layout_height="match_parent"
                     android:background="@color/toolBarColor"
                     android:drawableLeft="@android:drawable/stat_notify_chat"
-                    android:text="Contacteaza"
+                    android:text="Mesaj"
                     android:textColor="@color/white"
+                    android:paddingLeft="20dp"
                     android:textSize="18dp"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="30dp"/>
+                    />
 
                 <View
                 android:layout_width="1dp"
@@ -65,13 +66,26 @@
 
                 <Button
                     android:id="@+id/rating"
-                    android:paddingLeft="40dp"
-                    android:paddingRight="40dp"
-                    android:layout_width="212dp"
+
+                    android:layout_width="140dp"
                     android:layout_height="match_parent"
                     android:background="@color/toolBarColor"
                     android:drawableLeft="@android:drawable/btn_star_big_on"
                     android:text="Recenzie"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="58dp"
+                    android:background="@color/tabBarColor" />
+
+                <Button
+                    android:id="@+id/programari"
+                    android:layout_width="148dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/toolBarColor"
+                    android:text="Programari"
                     android:textColor="@color/white"
                     android:textSize="20dp"
                     />
@@ -162,16 +176,30 @@
                     android:text="Address"
                     android:textColor="@color/toolBarColor"
                     android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/address"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_add_location_black_24dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Adresa"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_add_location_black_24dp"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Adresa"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/seeOnMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text=" (vezi pe harta)"
+                        android:textColor="@color/toolBarColor"
+                        android:textStyle="bold|italic"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -216,6 +244,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
+                android:layout_marginBottom="25dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -223,7 +252,7 @@
                     android:layout_height="wrap_content"
                     android:text="Recenzii"
                     android:textColor="@color/toolBarColor"
-                    android:textSize="13sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/recenzie"
@@ -234,13 +263,11 @@
                     android:text="Nicio recenzie"
                     android:textColor="#000000"
                     android:textSize="18sp" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:background="@android:color/darker_gray" />
-
 
             </LinearLayout>
         </LinearLayout>

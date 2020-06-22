@@ -36,7 +36,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginLeft="20dp"
                     android:text="DisplayName"
-                    android:textColor="@color/chatColor"
+                    android:textColor="@color/white"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
@@ -44,13 +44,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"/>
+                <ImageButton
                     android:id="@+id/call"
+                    android:background="@color/tabBarColor"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="40dp"
-                    app:srcCompat="@android:drawable/ic_menu_call"
-                    android:layout_marginRight="-110dp"/>
+                    android:layout_height="60dp"
+                    android:paddingLeft="150dp"
+                    android:src="@drawable/ic_call_black_24dp"
+                    />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.licenta.R;
-import com.example.licenta.model.Patient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +23,7 @@ public class PatientProfile extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
     private ImageView userImage;
-    private TextView userEmail, userAddress, userGender, userPhone, userBirthday, userName;
+    private TextView userEmail, userAddress, userGender, userPhone, userBirthday, userName, seeOnMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +35,7 @@ public class PatientProfile extends AppCompatActivity {
         userPhone=findViewById(R.id.phone);
         userBirthday=findViewById(R.id.birthday);
         userName=findViewById(R.id.userName);
+        seeOnMap=findViewById(R.id.seeOnMap);
 
         final String patient_id=getIntent().getStringExtra("patient_id");
         currentUser=FirebaseAuth.getInstance().getCurrentUser();
@@ -69,14 +69,22 @@ public class PatientProfile extends AppCompatActivity {
                             .load(image)
                             .resize(160, 160)
                             .into(userImage);
+
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
+        seeOnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent=new Intent(getApplicationContext(), GoogleMapsActivity.class);
+                intent.putExtra("address",userAddress.getText());
+                startActivity(intent);
+            }
+        });
     }
+
 }

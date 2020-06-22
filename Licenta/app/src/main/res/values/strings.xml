@@ -1,26 +1,5 @@
 <resources>
-    <string name="app_name">Licenta</string>
-    <string name="email">E-mail</string>
-    <string name="loginPatientTitle">Patient Login</string>
-    <string name="address">Address</string>
-    <string name="birthday">Birthday</string>
-    <string name="firstName">First Name</string>
-    <string name="lastName">Last Name</string>
-    <string name="phone">Phone Number</string>
-    <string name="registerPatientTitle">Patient Register</string>
-    <string name="registerMedicTitle">Doctor Register</string>
-    <string name="loginMedicTitle">Doctor Login</string>
-    <string name="loginButton">Login</string>
-    <string name="password">Password</string>
-    <string name="register1">Don`t have an account?</string>
-    <string name="register2">Register</string>
-    <string name="medicButton">Doctor</string>
-    <string name="patientButton">Patient</string>
-    <string name="welcome_to_medchat">Welcome to MedChat!</string>
-    <string name="choose_the_category">Choose your category!</string>
-    <string name="logout">Logout</string>
-    <string name="profile_settings">Profile Settings</string>
-    <string name="doctor_register">Doctor Register</string>
+    <string name="app_name">MedChat</string>
 
     <string-array name="Specializari">
         <item>Cardiologie</item>
@@ -55,4 +34,20 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <string name="google_maps_API_key">AIzaSyC3k_XtiEeia0XS_WEOW6SzAOS644ot3kA</string>
+    <string name="selecteaza_o_data">Selecteaza o data!</string>
+    <string name="programeaza_te">Programeaza-te</string>
+    <string name="data">Data:</string>
+    <string name="adresa_de_e_mail">Adresa de e-mail</string>
+    <string name="logare_medic">Logare Medic</string>
+    <string name="parola">Parola</string>
+    <string name="login">Login</string>
+    <string name="nu_aveti_inca_un_cont">Nu aveti inca un cont?</string>
+    <string name="inregistrati_va">Inregistrati-va!</string>
+    <string name="login">Login</string>
+    <string name="nu_aveti_inca_un_cont">Nu aveti inca un cont?</string>
+    <string name="inregistrati_va">Inregistrati-va!</string>
+    <string name="logare_pacient">Logare Pacient</string>
+    <string name="parola">Parola</string>
 </resources>

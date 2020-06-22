@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.licenta.R;
-import com.example.licenta.model.Chat;
+import com.example.licenta.Model.Chat;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -57,6 +57,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             Picasso.with(context)
                     .load(chat.getMessage())
                     .into(holder.showImage);
+            holder.profileImage.setVisibility(View.GONE);
             holder.showMessage.setVisibility(View.GONE);
         } else {
             holder.showMessage.setText(chat.getMessage());

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/rowChat">
 
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctorImage"
         android:layout_width="65dp"
@@ -18,18 +19,14 @@
         android:id="@+id/doctorName"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="14dp"
-        android:layout_marginRight="106dp"
-        android:textColor="@color/black"
+        android:textColor="@color/gray"
         android:layout_toEndOf="@+id/doctorImage"
         android:layout_toRightOf="@+id/doctorImage"
         android:text="Display name"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -37,15 +34,14 @@
         android:layout_width="wrap_content"
         android:layout_height="24dp"
         android:layout_below="@+id/doctorName"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_marginStart="3dp"
         android:layout_marginLeft="21dp"
         android:layout_marginTop="7dp"
         android:layout_marginRight="165dp"
         android:layout_toEndOf="@+id/doctorImage"
         android:layout_toRightOf="@+id/doctorImage"
-        android:text="Specializare"/>
+        android:text="Specializare"
+        android:textSize="16dp"/>
 
     <TextView
         android:id="@+id/time"
@@ -57,12 +53,45 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="7dp"
         android:layout_below="@+id/doctorName"
-        android:layout_toLeftOf="@+id/specializare"
-        android:textColor="@color/gray" />
+        android:layout_toLeftOf="@+id/specializare"/>
+
+    <TextView
+        android:id="@+id/data"
+        android:layout_width="177dp"
+        android:layout_height="32dp"
+        android:layout_below="@+id/doctorName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="-26dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_toLeftOf="@+id/doctorName"
+        android:layout_toEndOf="@+id/doctorName"
+        android:layout_toRightOf="@+id/doctorName"
+        android:text="Buna"
+        android:visibility="gone"
+        android:textColor="@color/red"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+    android:id="@+id/phone"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_marginLeft="240dp"
+    android:layout_marginTop="15dp"
+    android:layout_toRightOf="@id/doctorImage"
+    android:background="@color/chatColor"
+    android:visibility="gone"
+    android:src="@drawable/ic_call_black_24dp" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:layout_below="@+id/specializare"
         android:background="@android:color/darker_gray"/>
 
 </RelativeLayout>

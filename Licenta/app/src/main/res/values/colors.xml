@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#2DCEE3</color>
+    <color name="colorAccent">#158998</color>
     <color name="toolBarColor">#63C1EC</color>
     <color name="tabBarColor">#3694BF</color>
 
@@ -11,5 +11,7 @@
     <color name="chatWindow">#A3AAAE</color>
     <color name="black">#090909</color>
     <color name="gray">#403C3C</color>
+    <color name="red">#FA4747</color>
+    <color name="green">#037A05</color>
 
 </resources>

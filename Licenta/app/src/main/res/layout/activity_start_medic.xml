@@ -29,7 +29,11 @@
                 android:id="@+id/tabLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/toolBarColor" />
+                app:tabInlineLabel="true"
+                android:background="@color/toolBarColor"
+                app:tabTextAppearance="@style/MineCustomTabText"
+                app:tabTextColor="@color/chatColor"
+                app:tabSelectedTextColor="@color/tabBarColor" />
         </com.google.android.material.appbar.AppBarLayout>
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"

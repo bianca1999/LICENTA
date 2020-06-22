@@ -3,15 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/chatColor"
     android:layout_height="match_parent"
-    tools:context=".register.RegisterPatientActivity">
+    tools:context=".Register.RegisterPatientActivity">
     <include layout="@layout/bar_layout"
         android:id="@+id/main_app_bar"/>
 
     <TextView
         android:id="@+id/registerPatient"
-        android:layout_width="298dp"
-        android:layout_height="52dp"
+        android:layout_width="323dp"
+        android:layout_height="62dp"
+        android:backgroundTint="@color/toolBarColor"
+        android:drawableLeft="@drawable/ic_perm_contact_calendar_black_24dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="Inregistrare Pacient"
         android:textSize="30sp"
@@ -21,13 +24,13 @@
         app:layout_constraintHorizontal_bias="0.559"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092"
-        android:backgroundTint="@color/toolBarColor"/>
+        app:layout_constraintVertical_bias="0.092" />
 
     <EditText
         android:id="@+id/firstNameEditText"
         android:layout_width="303dp"
-        android:layout_height="47dp"
+        android:layout_height="42dp"
+        android:background="@color/white"
         android:drawableLeft="@drawable/ic_person_black_24dp"
         android:ems="10"
         android:hint="Nume"
@@ -41,10 +44,11 @@
     <EditText
         android:id="@+id/lastNameEditText"
         android:layout_width="303dp"
-        android:layout_height="45dp"
+        android:layout_height="42dp"
         android:ems="10"
         android:hint="Prenume"
         android:inputType="textPersonName"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
@@ -56,10 +60,11 @@
 
     <EditText
         android:id="@+id/emailEditText"
-        android:layout_width="289dp"
-        android:layout_height="48dp"
+        android:layout_width="303dp"
+        android:layout_height="42dp"
         android:ems="10"
         android:hint=" E-mail"
+        android:background="@color/white"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,11 +77,12 @@
 
     <EditText
         android:id="@+id/phoneEditText"
-        android:layout_width="288dp"
+        android:layout_width="303dp"
         android:layout_height="42dp"
         android:ems="10"
         android:hint="Telefon"
         android:inputType="phone"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.471"
@@ -88,8 +94,9 @@
 
     <EditText
         android:id="@+id/adressEditText"
-        android:layout_width="289dp"
-        android:layout_height="44dp"
+        android:layout_width="303dp"
+        android:layout_height="42dp"
+        android:background="@color/white"
         android:ems="10"
         android:hint="Adresa"
         android:inputType="textPersonName"
@@ -105,13 +112,15 @@
 
     <DatePicker
         android:id="@+id/datePicker1"
-        android:layout_width="288dp"
-        android:layout_height="73dp"
+        android:layout_width="303dp"
+        android:layout_height="64dp"
         android:layout_marginBottom="376dp"
+        android:background="@color/white"
         android:calendarViewShown="false"
         android:datePickerMode="spinner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.425"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/birthdayTextView"
         app:layout_constraintVertical_bias="1.0" />
@@ -119,16 +128,17 @@
     <TextView
         android:id="@+id/birthdayTextView"
         android:layout_width="290dp"
-        android:layout_height="36dp"
+        android:layout_height="30dp"
         android:drawableLeft="@android:drawable/ic_menu_my_calendar"
         android:text=" Zi de nastere"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lastNameEditText"
-        app:layout_constraintVertical_bias="0.024" />
+        app:layout_constraintVertical_bias="0.015" />
 
     <Button
         android:id="@+id/registerButton"
@@ -137,7 +147,7 @@
         android:layout_marginBottom="56dp"
         android:background="@color/toolBarColor"
         android:text="Inregistrare"
-        android:textColor="@color/chatColor"
+        android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -161,6 +171,7 @@
             android:layout_width="106dp"
             android:layout_height="33dp"
             android:text=" Sex"
+            android:textStyle="bold"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="473dp"
@@ -169,26 +180,28 @@
         <Spinner
             android:id="@+id/genderSpinner"
             android:layout_width="201dp"
-            android:layout_height="34dp"
+            android:layout_height="40dp"
+            android:background="@color/white"
             tools:layout_editor_absoluteX="169dp"
             tools:layout_editor_absoluteY="473dp" />
     </LinearLayout>
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="292dp"
+        android:layout_width="303dp"
         android:layout_height="42dp"
+        android:background="@color/white"
         android:drawableLeft="@android:drawable/ic_secure"
         android:ems="10"
         android:hint="  Parola"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.42"
 
+        app:layout_constraintHorizontal_bias="0.435"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GenderLayout"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.074" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

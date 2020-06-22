@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,8 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.Adapter.MessageAdapter;
-import com.example.licenta.model.Chat;
+import com.example.licenta.Model.Chat;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +42,7 @@ import java.util.List;
 public class WindowChatDoctorActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
-    private TextView displayName, specializare;
+    private TextView displayName, specializare,phone;
 
     private ImageButton buttonSend, addButton, callButon;
     private EditText textSend;
@@ -48,6 +50,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private List<Chat> chatList;
     private ImageView doctorImage;
+    private AppBarLayout appBarLayout;
 
     private static final int GALLERY_PICK = 1;
     private StorageReference storageReference;
@@ -60,6 +63,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
         final String current_patient_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String doctor_id = getIntent().getStringExtra("doctor_id");
 
+        appBarLayout=findViewById(R.id.topbar);
         displayName = findViewById(R.id.displayName);
         specializare = findViewById(R.id.specializare);
         buttonSend = findViewById(R.id.sendBtn);
@@ -69,22 +73,12 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
         messageList.setHasFixedSize(true);
         addButton = findViewById(R.id.addBtn);
         callButon=findViewById(R.id.call);
+        phone=findViewById(R.id.phone);
 
         storageReference = FirebaseStorage.getInstance().getReference();
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
-
         messageList.setLayoutManager(linearLayoutManager);
-
-        callButon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WindowChatDoctorActivity.this, CallVideoActivity.class);
-                intent.putExtra("doctor_id",doctor_id);
-                startActivity(intent);
-            }
-        });
-
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,11 +121,13 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                 String specializareText = dataSnapshot.child("specializare").getValue().toString();
                 String title=dataSnapshot.child("title").getValue().toString();
                 String image=dataSnapshot.child("image").getValue().toString();
+                String phoneText=dataSnapshot.child("phone").getValue().toString();
                 if(!image.equals("default")){
                     Picasso.with(WindowChatDoctorActivity.this)
                             .load(image)
                             .into(doctorImage);
                 }
+                phone.setText(phoneText);
 
                 displayName.setText("Dr. " + firstName + " " + lastName);
                 specializare.setText(title+" "+specializareText);
@@ -141,6 +137,15 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+
+        callButon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+                startActivity(intent);
             }
         });
 

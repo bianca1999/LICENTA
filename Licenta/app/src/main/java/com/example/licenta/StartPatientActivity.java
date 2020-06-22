@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,6 +34,10 @@ public class StartPatientActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private PatientPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
+    private int[] tabIcons={
+            R.drawable.ic_chat_black_24dp,
+            R.drawable.ic_person_white_24dp
+    };
     private TextView name, email;
     private ImageView imagePatient;
     private DrawerLayout drawerLayout;
@@ -91,6 +97,7 @@ public class StartPatientActivity extends AppCompatActivity {
         viewPager.setAdapter(sectionsPagerAdapter);
         tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        setupTabIcons();
 
         String current_patient_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(current_patient_id);
@@ -117,7 +124,13 @@ public class StartPatientActivity extends AppCompatActivity {
         });
 
     }
-
+    private void setupTabIcons(){
+       tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        int tabIconColor = ContextCompat.getColor(this, R.color.chatColor);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+       tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

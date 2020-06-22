@@ -15,6 +15,8 @@
         android:layout_marginTop="28dp"
         android:gravity="center_horizontal"
         android:text="Editeaza-ti datele de profil!"
+        android:paddingLeft="30dp"
+        android:drawableLeft="@drawable/ic_local_hospital_black_24dp"
         android:textSize="25dp"
         android:textStyle="bold"/>
 
@@ -39,6 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nume"
+                android:textStyle="bold"
                 android:textColor="@color/toolBarColor"
                 android:textSize="24sp" />
 
@@ -70,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Prenume"
+                android:textStyle="bold"
                 android:textColor="@color/toolBarColor"
                 android:textSize="24sp" />
             <EditText
@@ -99,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:text="Adresa"
                 android:textColor="@color/toolBarColor"
+                android:textStyle="bold"
                 android:textSize="24sp" />
             <EditText
                 android:id="@+id/adresa"
@@ -129,6 +134,7 @@
             android:layout_height="wrap_content"
             android:text="Telefon"
             android:textColor="@color/toolBarColor"
+            android:textStyle="bold"
             android:textSize="24sp" />
         <EditText
             android:id="@+id/telefon"
@@ -160,6 +166,7 @@
                 android:layout_height="wrap_content"
                 android:text="Titlu"
                 android:textColor="@color/toolBarColor"
+                android:textStyle="bold"
                 android:textSize="24sp" />
             <EditText
                 android:id="@+id/titlu"

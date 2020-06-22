@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.google.common.collect.Table;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,9 +28,9 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 public class DoctorProfile extends AppCompatActivity {
-    private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress, recenzie;
+    private TextView doctorEmail, doctorPhone, doctorName, specializare, doctorAddress, recenzie, seeOnMap;
     private DatabaseReference databaseReference;
-    private Button messageButton,ratingButton;
+    private Button messageButton,ratingButton, appointmentButton;
     private ImageView doctorImage;
 
 
@@ -36,6 +39,7 @@ public class DoctorProfile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
+        final String patient_id=FirebaseAuth.getInstance().getCurrentUser().getUid();
         final String doctor_id=getIntent().getStringExtra("doctor_id");
         doctorName=findViewById(R.id.doctorName);
         doctorPhone=findViewById(R.id.phone);
@@ -46,8 +50,12 @@ public class DoctorProfile extends AppCompatActivity {
         ratingButton=findViewById(R.id.rating);
         recenzie=findViewById(R.id.recenzie);
         doctorImage=findViewById(R.id.doctorImage);
+        appointmentButton=findViewById(R.id.programari);
+        seeOnMap=findViewById(R.id.seeOnMap);
 
         showRating(doctor_id);
+
+
         ratingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +71,18 @@ public class DoctorProfile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+       appointmentButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent= new Intent(getApplicationContext(),AppointmentActivity.class);
+               intent.putExtra("patient_id",patient_id);
+               intent.putExtra("doctor_id",doctor_id);
+               startActivity(intent);
+
+
+           }
+       });
 
         databaseReference= FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -94,6 +114,14 @@ public class DoctorProfile extends AppCompatActivity {
 
             }
         });
+        seeOnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Intent intent=new Intent(getApplicationContext(), GoogleMapsActivity.class);
+                intent.putExtra("address",doctorAddress.getText());
+                startActivity(intent);
+            }
+        });
     }
 
     public void setRating(final String doctor_id){
@@ -103,12 +131,10 @@ public class DoctorProfile extends AppCompatActivity {
         final EditText reviewEditText=view.findViewById(R.id.recenzieEditText);
         RatingBar ratingBar=view.findViewById(R.id.ratingBar);
         final TextView ratingScore=view.findViewById(R.id.scoreRating);
-
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
                 ratingScore.setText(String.valueOf(rating));
-
             }
         });
         dialog.setView(view).setPositiveButton("Trimite", new DialogInterface.OnClickListener() {
@@ -168,7 +194,7 @@ public class DoctorProfile extends AppCompatActivity {
 
                 }
             });
-
-
     }
+
+
 }

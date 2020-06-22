@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register.RegisterMedicActivity">
+    android:background="@color/chatColor"
+    tools:context=".Register.RegisterMedicActivity">
 
     <include
         android:id="@+id/main_app_bar"
@@ -12,6 +13,9 @@
 
     <TextView
         android:id="@+id/registerDoctor"
+        android:drawableLeft="@drawable/ic_local_hospital_black_24dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="30dp"
         android:layout_width="408dp"
         android:layout_height="47dp"
         android:gravity="center_horizontal|center_vertical"
@@ -28,10 +32,11 @@
     <EditText
         android:id="@+id/firstNameEditText"
         android:layout_width="303dp"
-        android:layout_height="47dp"
+        android:layout_height="42dp"
         android:ems="10"
         android:hint=" Nume"
         android:inputType="textPersonName"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
@@ -45,13 +50,13 @@
     <EditText
         android:id="@+id/lastNameEditText"
         android:layout_width="303dp"
-        android:layout_height="45dp"
+        android:layout_height="42dp"
         android:drawableLeft="@drawable/ic_person_black_24dp"
         android:ems="10"
         android:hint=" Prenume"
         android:inputType="textPersonName"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/firstNameEditText"
@@ -60,11 +65,11 @@
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="300dp"
-        android:layout_height="47dp"
+        android:layout_height="42dp"
         android:drawableLeft="@android:drawable/sym_action_email"
         android:ems="10"
         android:hint=" E mail"
-
+        android:background="@color/white"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -76,11 +81,12 @@
     <EditText
         android:id="@+id/phoneEditText"
         android:layout_width="301dp"
-        android:layout_height="45dp"
+        android:layout_height="42dp"
         android:drawableLeft="@drawable/ic_phone_black_24dp"
         android:ems="10"
         android:hint="Telefon"
         android:inputType="phone"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.463"
@@ -91,11 +97,12 @@
     <EditText
         android:id="@+id/adressEditText"
         android:layout_width="302dp"
-        android:layout_height="43dp"
+        android:layout_height="42dp"
         android:ems="10"
         android:hint=" Adresa"
         android:inputType="textPersonName"
         android:textSize="18sp"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.439"
@@ -113,23 +120,25 @@
         android:layout_height="52dp"
         android:background="@color/toolBarColor"
         android:text="Inregistrare"
-        android:textColor="@color/chatColor"
+        android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.566"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.236" />
+        app:layout_constraintVertical_bias="0.333" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="314dp"
-        android:layout_height="41dp"
+        android:layout_height="42dp"
         android:layout_marginBottom="96dp"
         android:drawableLeft="@android:drawable/ic_secure"
         android:ems="10"
         android:hint=" Parola"
         android:inputType="textPassword"
+        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.536"
@@ -140,7 +149,7 @@
     <LinearLayout
         android:id="@+id/specializareLayout"
         android:layout_width="312dp"
-        android:layout_height="41dp"
+        android:layout_height="45dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,17 +159,20 @@
 
         <TextView
             android:id="@+id/specializareTextView"
-            android:layout_width="106dp"
-            android:layout_height="33dp"
+            android:layout_width="109dp"
+            android:layout_height="42dp"
+            android:layout_gravity="center_vertical|center_horizontal"
             android:text="Specializare"
-            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textSize="19sp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="473dp" />
 
         <Spinner
             android:id="@+id/spinner"
-            android:layout_width="201dp"
-            android:layout_height="34dp"
+            android:layout_width="198dp"
+            android:layout_height="42dp"
+            android:background="@color/white"
             tools:layout_editor_absoluteX="169dp"
             tools:layout_editor_absoluteY="473dp" />
     </LinearLayout>
@@ -170,27 +182,28 @@
         android:layout_width="312dp"
         android:layout_height="39dp"
         android:orientation="horizontal"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/specializareLayout"
-        app:layout_constraintVertical_bias="0.098">
+        app:layout_constraintVertical_bias="0.053">
 
         <TextView
             android:id="@+id/TitluTextView"
-            android:layout_width="106dp"
-            android:layout_height="33dp"
+            android:layout_width="109dp"
+            android:layout_height="42dp"
             android:text="Titlu"
-            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textSize="19sp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="473dp" />
 
         <Spinner
             android:id="@+id/titluSpinner"
-            android:layout_width="201dp"
-            android:layout_height="34dp"
+            android:layout_width="198dp"
+            android:layout_height="42dp"
+            android:background="@color/white"
             tools:layout_editor_absoluteX="169dp"
             tools:layout_editor_absoluteY="473dp" />
     </LinearLayout>

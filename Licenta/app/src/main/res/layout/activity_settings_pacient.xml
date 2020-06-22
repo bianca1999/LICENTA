@@ -55,7 +55,10 @@
                 android:layout_width="209dp"
                 android:layout_height="match_parent"
                 android:background="@color/toolBarColor"
-                android:text="Schimba fotografia"
+                android:text="Schimba photo"
+                android:paddingLeft="25dp"
+                android:paddingRight="20dp"
+                android:drawableLeft="@drawable/ic_add_a_photo_white_24dp"
                 android:textColor="@color/white"
                 android:textSize="17dp" />
 
@@ -72,6 +75,9 @@
                 android:background="@color/toolBarColor"
                 android:text="Editeaza Profil"
                 android:textColor="@color/white"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp"
+                android:drawableLeft="@drawable/ic_settings_white_24dp"
                 android:textSize="16dp"
                  />
         </LinearLayout>
