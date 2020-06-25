@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/chatColor"
-    tools:context=".Login.LoginPatientActivity">
+    tools:context="com.example.licenta.Login.LoginPatientActivity">
+
     <include layout="@layout/bar_layout"
         android:id="@+id/main_app_bar"/>
 
@@ -62,7 +63,7 @@
         android:layout_width="167dp"
         android:layout_height="41dp"
         android:text="@string/login"
-        android:textColor="@color/chatColor"
+        android:textColor="@color/white"
         android:background="@color/toolBarColor"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"

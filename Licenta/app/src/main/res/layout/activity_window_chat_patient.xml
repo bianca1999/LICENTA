@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WindowChatPatientActivity">
+    tools:context="com.example.licenta.Activity.WindowChatPatientActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/topbar"
@@ -54,7 +54,7 @@
                     android:background="@color/tabBarColor"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:paddingLeft="150dp"
+                    android:paddingLeft="90dp"
                     android:src="@drawable/ic_call_black_24dp"
                     />
             </RelativeLayout>

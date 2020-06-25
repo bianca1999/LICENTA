@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/chatColor"
-    tools:context=".Register.RegisterMedicActivity">
+    tools:context="com.example.licenta.Register.RegisterMedicActivity">
 
     <include
         android:id="@+id/main_app_bar"
@@ -94,25 +94,25 @@
         app:layout_constraintTop_toBottomOf="@+id/emailEditText"
         app:layout_constraintVertical_bias="0.03" />
 
+
     <EditText
         android:id="@+id/adressEditText"
         android:layout_width="302dp"
         android:layout_height="42dp"
+        android:background="@color/white"
+        android:drawableLeft="@drawable/ic_add_location_black_24dp"
         android:ems="10"
         android:hint=" Adresa"
         android:inputType="textPersonName"
         android:textSize="18sp"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneEditText"
-        app:layout_constraintVertical_bias="0.053"
-        android:drawableLeft="@drawable/ic_add_location_black_24dp"
+        app:layout_constraintVertical_bias="0.062"
 
         />
-
 
     <Button
         android:id="@+id/registerButton"
@@ -124,47 +124,47 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.566"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.333" />
+        app:layout_constraintVertical_bias="0.341" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="314dp"
+        android:layout_width="302dp"
         android:layout_height="42dp"
         android:layout_marginBottom="96dp"
+        android:background="@color/white"
         android:drawableLeft="@android:drawable/ic_secure"
         android:ems="10"
         android:hint=" Parola"
         android:inputType="textPassword"
-        android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titluLayout"
-        app:layout_constraintVertical_bias="0.263" />
+        app:layout_constraintVertical_bias="0.327" />
 
     <LinearLayout
         android:id="@+id/specializareLayout"
-        android:layout_width="312dp"
+        android:layout_width="302dp"
         android:layout_height="45dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/adressEditText"
-        app:layout_constraintVertical_bias="0.113">
+        app:layout_constraintVertical_bias="0.077">
 
         <TextView
             android:id="@+id/specializareTextView"
             android:layout_width="109dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical|center_horizontal"
             android:text="Specializare"
-            android:textStyle="bold"
             android:textSize="19sp"
+            android:textStyle="bold"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="473dp" />
 
@@ -179,7 +179,7 @@
 
     <LinearLayout
         android:id="@+id/titluLayout"
-        android:layout_width="312dp"
+        android:layout_width="302dp"
         android:layout_height="39dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -192,7 +192,7 @@
         <TextView
             android:id="@+id/TitluTextView"
             android:layout_width="109dp"
-            android:layout_height="42dp"
+            android:layout_height="40dp"
             android:text="Titlu"
             android:textStyle="bold"
             android:textSize="19sp"

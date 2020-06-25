@@ -43,11 +43,9 @@
     <string name="logare_medic">Logare Medic</string>
     <string name="parola">Parola</string>
     <string name="login">Login</string>
-    <string name="nu_aveti_inca_un_cont">Nu aveti inca un cont?</string>
     <string name="inregistrati_va">Inregistrati-va!</string>
-    <string name="login">Login</string>
     <string name="nu_aveti_inca_un_cont">Nu aveti inca un cont?</string>
-    <string name="inregistrati_va">Inregistrati-va!</string>
     <string name="logare_pacient">Logare Pacient</string>
-    <string name="parola">Parola</string>
+    <string name="logout">Logout</string>
+
 </resources>

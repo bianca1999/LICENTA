@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.licenta.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -80,7 +81,7 @@ public class ConfirmAppointmentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 makeAnAppointment(patient_id,doctor_id,dataText);
-                Intent intent=new Intent(ConfirmAppointmentActivity.this,StartPatientActivity.class);
+                Intent intent=new Intent(ConfirmAppointmentActivity.this, StartPatientActivity.class);
                 startActivity(intent);
             }
         });

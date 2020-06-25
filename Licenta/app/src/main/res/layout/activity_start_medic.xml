@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/chatColor"
     tools:openDrawer="start"
-    tools:context=".StartMedicActivity"
+    tools:context="com.example.licenta.Activity.StartMedicActivity"
     android:fitsSystemWindows="true"
     android:id="@+id/drawable"
 

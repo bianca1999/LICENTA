@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +15,7 @@ import android.util.Log;
 
 import android.widget.Toast;
 
+import com.example.licenta.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.CameraUpdateFactory;

@@ -15,9 +15,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.licenta.Model.Patient;
 import com.example.licenta.R;
 import com.example.licenta.Login.LoginPatientActivity;
-import com.example.licenta.Model.Patient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -68,18 +68,18 @@ public class RegisterPatientActivity extends AppCompatActivity {
             String passwordText=password.getText().toString();
 
             if(!TextUtils.isEmpty(lastNameText)
-                    || !TextUtils.isEmpty(firstNameText)
-                    || !TextUtils.isEmpty(emailText)
-                    || !TextUtils.isEmpty(phoneText)
-                    ||!TextUtils.isEmpty(addressText)
-                    ||!TextUtils.isEmpty(genderText)
-                    ||!TextUtils.isEmpty(passwordText)) {
+                    && !TextUtils.isEmpty(firstNameText)
+                    && !TextUtils.isEmpty(emailText)
+                    && !TextUtils.isEmpty(phoneText)
+                    &&!TextUtils.isEmpty(addressText)
+                    &&!TextUtils.isEmpty(genderText)
+                    &&!TextUtils.isEmpty(passwordText)) {
                 progressDialog.setTitle("Inregistrare pacient");
                 progressDialog.setMessage("Va rugam sa asteptati pentru a inregistra datele dumneavoastra...");
                 progressDialog.setCanceledOnTouchOutside(false);
                 progressDialog.show();
 
-                registerPatient(lastNameText, firstNameText, emailText, phoneText, addressText, genderText, passwordText, "default");
+                patientRegister(lastNameText, firstNameText, emailText, phoneText, addressText, genderText, passwordText, "default");
             }
             else {
                 Toast.makeText(RegisterPatientActivity.this, "Va rugam sa completati toate campurile!",
@@ -89,7 +89,7 @@ public class RegisterPatientActivity extends AppCompatActivity {
         });
     }
 
-    private void registerPatient(final String lastNameText, final String firstNameText, final String emailText, final String phoneText, final String addressText, final String genderText,final String passwordText, final String imageText) {
+    private void patientRegister(final String lastNameText, final String firstNameText, final String emailText, final String phoneText, final String addressText, final String genderText,final String passwordText, final String imageText) {
         mAuth.createUserWithEmailAndPassword(emailText, passwordText)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -104,9 +104,8 @@ public class RegisterPatientActivity extends AppCompatActivity {
                             sendToLoginPage();
                         } else {
                             progressDialog.hide();
-                            Toast.makeText(RegisterPatientActivity.this, "Inregistrare nereusita!",
+                            Toast.makeText(RegisterPatientActivity.this, "înregistrare nereușită!",
                                     Toast.LENGTH_SHORT).show();
-
                         }
 
                     }

@@ -17,25 +17,25 @@
         android:roundIcon="@mipmap/ic_launcher_chat_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GoogleMapsActivity"></activity>
+        <activity android:name=".Activity.GoogleMapsActivity"></activity>
 
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC3k_XtiEeia0XS_WEOW6SzAOS644ot3kA"/>
 
-        <activity android:name=".ConfirmAppointmentActivity" />
-        <activity android:name=".AppointmentActivity" />
-        <activity android:name=".SettingsMedicActivity" />
-        <activity android:name=".SettingsPacientActivity" />
+        <activity android:name=".Activity.ConfirmAppointmentActivity" />
+        <activity android:name=".Activity.AppointmentActivity" />
+        <activity android:name=".Activity.SettingsMedicActivity" />
+        <activity android:name=".Activity.SettingsPacientActivity" />
         <activity
-            android:name=".WindowChatPatientActivity"
-            android:parentActivityName=".StartMedicActivity" />
+            android:name=".Activity.WindowChatPatientActivity"
+            android:parentActivityName=".Activity.StartMedicActivity" />
         <activity
-            android:name=".WindowChatDoctorActivity"
-            android:parentActivityName=".SettingsPacientActivity" />
-        <activity android:name=".DoctorProfile" />
-        <activity android:name=".StartMedicActivity" />
-        <activity android:name=".StartPatientActivity" />
-        <activity android:name=".PatientProfile" />
+            android:name=".Activity.WindowChatDoctorActivity"
+            android:parentActivityName=".Activity.SettingsPacientActivity" />
+        <activity android:name=".Activity.DoctorProfile" />
+        <activity android:name=".Activity.StartMedicActivity" />
+        <activity android:name=".Activity.StartPatientActivity" />
+        <activity android:name=".Activity.PatientProfile" />
         <activity android:name=".Register.RegisterMedicActivity" />
         <activity android:name=".Register.RegisterPatientActivity" />
         <activity android:name=".Login.LoginPatientActivity" />
@@ -43,7 +43,7 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

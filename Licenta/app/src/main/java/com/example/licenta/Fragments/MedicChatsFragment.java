@@ -17,9 +17,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.example.licenta.R;
-import com.example.licenta.WindowChatPatientActivity;
 import com.example.licenta.Model.Chat;
+import com.example.licenta.R;
+import com.example.licenta.Activity.WindowChatPatientActivity;
 import com.example.licenta.Model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -31,7 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

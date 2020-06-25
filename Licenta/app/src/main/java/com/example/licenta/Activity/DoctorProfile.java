@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -9,14 +9,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.google.common.collect.Table;
+import com.example.licenta.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -75,7 +73,7 @@ public class DoctorProfile extends AppCompatActivity {
        appointmentButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Intent intent= new Intent(getApplicationContext(),AppointmentActivity.class);
+               Intent intent= new Intent(getApplicationContext(), AppointmentActivity.class);
                intent.putExtra("patient_id",patient_id);
                intent.putExtra("doctor_id",doctor_id);
                startActivity(intent);
@@ -188,7 +186,6 @@ public class DoctorProfile extends AppCompatActivity {
                         recenzie.setText("Nicio recenzie");
                     }
                 }
-
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 

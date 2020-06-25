@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.CalendarView;
 
 import android.widget.TextView;
+
+import com.example.licenta.R;
 
 
 public class AppointmentActivity extends AppCompatActivity {
@@ -42,7 +44,7 @@ public class AppointmentActivity extends AppCompatActivity {
         continua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(AppointmentActivity.this,ConfirmAppointmentActivity.class);
+                Intent intent=new Intent(AppointmentActivity.this, ConfirmAppointmentActivity.class);
                 intent.putExtra("data",appointmentDate.getText().toString());
                 intent.putExtra("doctor_id",doctorId);
                 intent.putExtra("patient_id",patientId);

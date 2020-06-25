@@ -1,4 +1,4 @@
-package com.example.licenta;
+package com.example.licenta.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,10 +17,9 @@ import android.widget.TextView;
 
 import com.example.licenta.Adapter.MessageAdapter;
 import com.example.licenta.Model.Chat;
+import com.example.licenta.R;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,18 +37,20 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-public class WindowChatDoctorActivity extends AppCompatActivity {
-    private DatabaseReference databaseReference;
-    private FirebaseUser currentUser;
-    private TextView displayName, specializare,phone;
+public class WindowChatPatientActivity extends AppCompatActivity {
 
-    private ImageButton buttonSend, addButton, callButon;
+    private DatabaseReference databaseReference;
+    private TextView displayName;
+    private ImageButton sendButton;
+    private ImageButton addButton;
+    private ImageButton callButton;
+    private ImageView patientImage;
     private EditText textSend;
+    private TextView phone;
+
     private RecyclerView messageList;
     private MessageAdapter messageAdapter;
     private List<Chat> chatList;
-    private ImageView doctorImage;
-    private AppBarLayout appBarLayout;
 
     private static final int GALLERY_PICK = 1;
     private StorageReference storageReference;
@@ -58,51 +58,52 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_window_chat_doctor);
+        setContentView(R.layout.activity_window_chat_patient);
 
-        final String current_patient_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final String doctor_id = getIntent().getStringExtra("doctor_id");
-
-        appBarLayout=findViewById(R.id.topbar);
+        final String current_medic_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String patient_id = getIntent().getStringExtra("pacient_id");
+        patientImage = findViewById(R.id.userImage);
         displayName = findViewById(R.id.displayName);
-        specializare = findViewById(R.id.specializare);
-        buttonSend = findViewById(R.id.sendBtn);
+        sendButton = findViewById(R.id.sendBtn);
+        addButton = findViewById(R.id.addBtn);
         textSend = findViewById(R.id.mesaj);
-        doctorImage=findViewById(R.id.userImage);
         messageList = findViewById(R.id.messageRecView);
         messageList.setHasFixedSize(true);
-        addButton = findViewById(R.id.addBtn);
-        callButon=findViewById(R.id.call);
-        phone=findViewById(R.id.phone);
-
+        callButton = findViewById(R.id.call);
+        phone = findViewById(R.id.phone);
         storageReference = FirebaseStorage.getInstance().getReference();
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext());
+
+
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
         linearLayoutManager.setStackFromEnd(true);
         messageList.setLayoutManager(linearLayoutManager);
-        buttonSend.setOnClickListener(new View.OnClickListener() {
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String mesaj = textSend.getText().toString();
-                Calendar c=Calendar.getInstance();
+                Calendar c = Calendar.getInstance();
                 SimpleDateFormat dateformat = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss aa");
                 String datetime = dateformat.format(c.getTime());
+
                 if (!mesaj.equals("")) {
-                    sendMessage(doctor_id,current_patient_id,mesaj,datetime);
+                    sendMessage(patient_id, current_medic_id, mesaj, datetime);
 
-                    HashMap<String,String> chatObject1=new HashMap<>();
-                    chatObject1.put("id",doctor_id);
-                    DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
-                    databaseReference.child("UserMessages").child(current_patient_id).push().setValue(chatObject1);
+                    HashMap<String, String> chatObject1 = new HashMap<>();
+                    chatObject1.put("id", patient_id);
+                    chatObject1.put("time", datetime);
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                    databaseReference.child("UserMessages").child(current_medic_id).push().setValue(chatObject1);
 
-                    HashMap<String,String> chatObject2=new HashMap<>();
-                    chatObject2.put("id",current_patient_id);
-                    databaseReference.child("UserMessages").child(doctor_id).push().setValue(chatObject2);
-
+                    HashMap<String, String> chatObject2 = new HashMap<>();
+                    chatObject2.put("id", current_medic_id);
+                    chatObject2.put("time", datetime);
+                    databaseReference.child("UserMessages").child(patient_id).push().setValue(chatObject2);
                 }
                 textSend.setText("");
             }
         });
-
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,26 +113,28 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, GALLERY_PICK);
             }
         });
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(doctor_id);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(patient_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
-                String specializareText = dataSnapshot.child("specializare").getValue().toString();
-                String title=dataSnapshot.child("title").getValue().toString();
-                String image=dataSnapshot.child("image").getValue().toString();
-                String phoneText=dataSnapshot.child("phone").getValue().toString();
-                if(!image.equals("default")){
-                    Picasso.with(WindowChatDoctorActivity.this)
-                            .load(image)
-                            .into(doctorImage);
-                }
+                String phoneText = dataSnapshot.child("phone").getValue().toString();
+                String image = dataSnapshot.child("image").getValue().toString();
                 phone.setText(phoneText);
+                if (lastName.endsWith("a")) {
+                    displayName.setText("Dna. " + firstName + " " + lastName);
+                } else {
+                    displayName.setText("Dl. " + firstName + " " + lastName);
 
-                displayName.setText("Dr. " + firstName + " " + lastName);
-                specializare.setText(title+" "+specializareText);
-                readMessage(current_patient_id,doctor_id);
+                }
+                if (!image.equals("default")) {
+                    Picasso.with(WindowChatPatientActivity.this)
+                            .load(image)
+                            .into(patientImage);
+                }
+                readMessage(patient_id, current_medic_id);
             }
 
             @Override
@@ -140,50 +143,48 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
             }
         });
 
-        callButon.setOnClickListener(new View.OnClickListener() {
+        callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:" + phone.getText().toString()));
-                startActivity(intent);
+                {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+                    startActivity(intent);
+                }
+
             }
         });
-
     }
 
-    public void sendMessage(String receiver,String sender, String message, String time){
+    public void sendMessage(String receiver, String sender, String message,String time) {
 
-        DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference();
-        HashMap<String,String> chatObject=new HashMap<>();
-        chatObject.put("sender",sender);
-        chatObject.put("receiver",receiver);
-        chatObject.put("message",message);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        HashMap<String, String> chatObject = new HashMap<>();
+        chatObject.put("sender", sender);
+        chatObject.put("receiver", receiver);
+        chatObject.put("message", message);
         chatObject.put("time",time);
-
-
         databaseReference.child("Chats").push().setValue(chatObject);
 
-
     }
 
-    public void readMessage(final String current_patient_id, final String doctor_id){
-        chatList=new ArrayList<>();
-        databaseReference=FirebaseDatabase.getInstance().getReference("Chats");
+    public void readMessage(final String current_medic_id, final String patient_id) {
+        chatList = new ArrayList<>();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 chatList.clear();
-                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
-                    Chat chat=dataSnapshot1.getValue(Chat.class);
-                    if(chat.getReceiver().equals(doctor_id)
-                        && chat.getSender().equals(current_patient_id)||
-                            chat.getReceiver().equals(current_patient_id)
-                                    && chat.getSender().equals(doctor_id)){
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    Chat chat = dataSnapshot1.getValue(Chat.class);
+                    if (chat.getReceiver().equals(patient_id)
+                            && chat.getSender().equals(current_medic_id) ||
+                            chat.getReceiver().equals(current_medic_id)
+                                    && chat.getSender().equals(patient_id)) {
                         chatList.add(chat);
                     }
-                    messageAdapter=new MessageAdapter(WindowChatDoctorActivity.this,chatList);
+                    messageAdapter = new MessageAdapter(WindowChatPatientActivity.this, chatList);
                     messageList.setAdapter(messageAdapter);
-
                 }
             }
 
@@ -193,6 +194,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -216,9 +218,9 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
                         filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                final String doctor_id = getIntent().getStringExtra("doctor_id");
+                                final String patient_id = getIntent().getStringExtra("pacient_id");
                                 final String downloadUrl = uri.toString();
-                                sendMessage(doctor_id,current_user_id,downloadUrl,datetime);
+                                sendMessage(patient_id,current_user_id,downloadUrl,datetime);
                             }
                         });
                     }
@@ -228,3 +230,7 @@ public class WindowChatDoctorActivity extends AppCompatActivity {
         }
     }
 }
+
+
+
+

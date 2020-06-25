@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:id="@+id/drawable"
     android:background="@color/chatColor"
-    tools:context=".StartPatientActivity"
+    tools:context="com.example.licenta.Activity.StartPatientActivity"
     tools:openDrawer="start">
 
     <RelativeLayout

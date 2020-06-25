@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.licenta.PatientProfile;
+import com.example.licenta.Activity.PatientProfile;
 import com.example.licenta.R;
 import com.example.licenta.Model.Patient;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;

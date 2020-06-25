@@ -1,29 +1,28 @@
-package com.example.licenta;
+package com.example.licenta.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.licenta.Adapter.MedicPagerAdapter;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.licenta.Adapter.PatientPagerAdapter;
+import com.example.licenta.R;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,40 +30,38 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-public class StartMedicActivity extends AppCompatActivity {
+public class StartPatientActivity extends AppCompatActivity {
     private Toolbar toolbar;
-
     private ViewPager viewPager;
-    private MedicPagerAdapter medicPagerAdapter;
+    private PatientPagerAdapter sectionsPagerAdapter;
     private TabLayout tabLayout;
-    private TextView nume, specializare;
-    private ImageView imagine;
-    private DatabaseReference databaseReference;
     private int[] tabIcons={
             R.drawable.ic_chat_black_24dp,
-            R.drawable.ic_person_white_24dp,
-            R.drawable.ic_perm_contact_calendar_white_24dp
+            R.drawable.ic_person_white_24dp
     };
+    private TextView name, email;
+    private ImageView imagePatient;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_medic);
+        setContentView(R.layout.activity_start_patient);
 
 
         drawerLayout = findViewById(R.id.drawable);
-        toolbar=findViewById(R.id.main_app_bar);
+        toolbar = findViewById(R.id.main_app_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Medic App");
+        getSupportActionBar().setTitle("Pacient App");
 
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
         NavigationView navigationView=findViewById(R.id.navView);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -73,11 +70,11 @@ public class StartMedicActivity extends AppCompatActivity {
                 Intent intent;
                 switch(id) {
                     case R.id.home:
-                        intent=new Intent(getApplicationContext(),StartMedicActivity.class);
-                        startActivity(intent);
-                        break;
+                    intent=new Intent(getApplicationContext(),StartPatientActivity.class);
+                    startActivity(intent);
+                    break;
                     case R.id.Settings:
-                        intent=new Intent(getApplicationContext(),SettingsMedicActivity.class);
+                        intent=new Intent(getApplicationContext(), SettingsPacientActivity.class);
                         startActivity(intent);
                         break;
                     case R.id.logout:
@@ -92,40 +89,37 @@ public class StartMedicActivity extends AppCompatActivity {
         });
 
         View viewHeaderView=navigationView.getHeaderView(0);
-        nume = viewHeaderView.findViewById(R.id.numePacient);
-        specializare = viewHeaderView.findViewById(R.id.emailPacient);
-        imagine=viewHeaderView.findViewById(R.id.image);
+        name = viewHeaderView.findViewById(R.id.numePacient);
+        email = viewHeaderView.findViewById(R.id.emailPacient);
+        imagePatient=viewHeaderView.findViewById(R.id.image);
+        viewPager = findViewById(R.id.viewPager);
 
-
-        viewPager=findViewById(R.id.viewPager);
-
-        medicPagerAdapter=new MedicPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(medicPagerAdapter);
-        tabLayout=findViewById(R.id.tabLayout);
+        sectionsPagerAdapter = new PatientPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(sectionsPagerAdapter);
+        tabLayout = findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
 
-        String current_doctor_uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Doctors").child(current_doctor_uid);
+        String current_patient_id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Patients").child(current_patient_id);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String image=dataSnapshot.child("image").getValue().toString();
                 String firstName = dataSnapshot.child("firstName").getValue().toString();
                 String lastName = dataSnapshot.child("lastName").getValue().toString();
-                String specializaret = dataSnapshot.child("specializare").getValue().toString();
-                String titleText=dataSnapshot.child("title").getValue().toString();
+                String emailt = dataSnapshot.child("email").getValue().toString();
+                String image=dataSnapshot.child("image").getValue().toString();
+                String username=firstName + " " + lastName;
 
-                nume.setText("Dr. "+ firstName + " " + lastName);
-                specializare.setText(titleText+", " +specializaret);
+                name.setText(username);
+                email.setText(emailt);
                 if(!image.equals("default")){
-                    Picasso.with(StartMedicActivity.this)
+                    Picasso.with(getApplicationContext())
                             .load(image)
-                            .resize(160,160)
-                            .into(imagine);
+                            .into(imagePatient);
                 }
-            }
 
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -133,38 +127,38 @@ public class StartMedicActivity extends AppCompatActivity {
         });
 
     }
-
+    private void setupTabIcons(){
+       tabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        int tabIconColor = ContextCompat.getColor(this, R.color.chatColor);
+        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+       tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        tabLayout.getTabAt(1).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.patient_menu,menu);
+        getMenuInflater().inflate(R.menu.patient_menu, menu);
         return true;
     }
 
+
+    private void sendToWelcomePage() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
         return true;
     }
-    private void setupTabIcons(){
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        int tabIconColor = ContextCompat.getColor(this, R.color.chatColor);
-        tabLayout.getTabAt(0).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(2).getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-        LinearLayout layout=(LinearLayout)((LinearLayout)tabLayout.getChildAt(0)).getChildAt(1);
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) layout.getLayoutParams();
-        layoutParams.weight = 0.6f;
-        layout.setLayoutParams(layoutParams);
-    }
-
-    private void sendToWelcomePage() {
-        Intent intent=new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
 }
+
+
+
+
+

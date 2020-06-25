@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DoctorProfile">
+    tools:context="com.example.licenta.Activity.DoctorProfile">
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
@@ -67,13 +67,14 @@
                 <Button
                     android:id="@+id/rating"
 
-                    android:layout_width="140dp"
+                    android:layout_width="135dp"
                     android:layout_height="match_parent"
                     android:background="@color/toolBarColor"
                     android:drawableLeft="@android:drawable/btn_star_big_on"
                     android:text="Recenzie"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
+                    android:paddingLeft="12dp"
                     />
                 <View
                     android:layout_width="1dp"
@@ -82,12 +83,13 @@
 
                 <Button
                     android:id="@+id/programari"
-                    android:layout_width="148dp"
+                    android:layout_width="154dp"
                     android:layout_height="match_parent"
                     android:background="@color/toolBarColor"
                     android:text="Programari"
                     android:textColor="@color/white"
-                    android:textSize="20dp"
+                    android:drawableLeft="@drawable/ic_person_white_24dp"
+                    android:textSize="18dp"
                     />
             </LinearLayout>
         </RelativeLayout>
@@ -103,7 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="30dp"
             android:orientation="vertical">
             <LinearLayout
@@ -244,7 +246,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:layout_marginBottom="25dp"
+                android:layout_marginBottom="15dp"
                 android:orientation="vertical">
 
                 <TextView

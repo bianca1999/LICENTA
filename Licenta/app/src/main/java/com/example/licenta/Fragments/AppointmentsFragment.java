@@ -1,6 +1,5 @@
 package com.example.licenta.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.licenta.Model.Appointment;
-import com.example.licenta.Model.Patient;
-import com.example.licenta.PatientProfile;
 import com.example.licenta.R;
-import com.example.licenta.WindowChatDoctorActivity;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
@@ -131,7 +127,7 @@ public class AppointmentsFragment extends Fragment {
         public void setDate(String date){
             TextView appointmentDate=view.findViewById(R.id.data);
             appointmentDate.setVisibility(View.VISIBLE);
-            appointmentDate.setText("-  "+date);
+            appointmentDate.setText(" - "+date);
 
         }
 

@@ -16,8 +16,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.licenta.Activity.DoctorProfile;
 import com.example.licenta.R;
-import com.example.licenta.DoctorProfile;
 import com.example.licenta.Model.Doctor;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;

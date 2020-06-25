@@ -20,8 +20,6 @@ public class MedicPagerAdapter extends FragmentPagerAdapter {
                 new AppointmentsFragment()
         };
     }
-
-
     @NonNull
     @Override
     public Fragment getItem(int position) {
@@ -36,13 +34,12 @@ public class MedicPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0)
-            return "CONVERSATII";
+            return "CONVERSAȚII";
 
         if (position == 1)
             return "PACIENȚI";
         else
-            return "PROGRAMARI";
-
+            return "PROGRAMĂRI";
     }
 }
 

@@ -15,9 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.licenta.R;
-import com.example.licenta.WindowChatDoctorActivity;
 import com.example.licenta.Model.Chat;
+import com.example.licenta.R;
+import com.example.licenta.Activity.WindowChatDoctorActivity;
 import com.example.licenta.Model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;

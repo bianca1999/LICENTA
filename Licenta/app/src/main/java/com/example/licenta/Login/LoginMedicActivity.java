@@ -12,9 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.licenta.Activity.StartMedicActivity;
 import com.example.licenta.R;
 import com.example.licenta.Register.RegisterMedicActivity;
-import com.example.licenta.StartMedicActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

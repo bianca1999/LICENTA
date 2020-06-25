@@ -14,9 +14,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.licenta.R;
 import com.example.licenta.Login.LoginMedicActivity;
 import com.example.licenta.Model.Doctor;
+import com.example.licenta.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
